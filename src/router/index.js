@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Events from '@/components/Events/Events.vue'
+import Main from '../components/Main/Main'
 
 Vue.use(Router)
 
@@ -8,8 +8,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'events',
-      component: Events
+      name: 'main',
+      component: Main
     }
   ]
 })

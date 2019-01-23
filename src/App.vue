@@ -12,10 +12,10 @@ export default {
 
 <style lang="scss">
   #app {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 1rem;
+    font-size: 1em;
     color: #333;
     text-align: center;
   }
