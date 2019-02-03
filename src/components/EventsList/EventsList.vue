@@ -1,31 +1,51 @@
 <template lang="pug">
-  v-container(grid-list-lg)
-    v-layout(row wrap)
-      v-flex(v-for="event in db.springEvents", :key="event.title" xs12 sm6 md4 lg3)
-        v-card(flat)
-          v-img(:src="`static/photo/${event.photo }`" aspect-ratio="1.7")
-          v-card-title
-            a(:href="`${event.link}`" target="_blank").sponsor-name {{ event.sponsor }}
-            h2.event-title {{ event.title }}
-          v-card-text
-            p {{ event.location }}
+  .main
+    Navbar
+    v-container(grid-list-lg)
+      v-layout(row justify-center)
+        v-flex(xs12)
+          h1.main-title Календарь спортивных мероприятий на 2019 год
+      v-layout(row wrap)
+        v-flex(v-for="event in db.springEvents", :key="event.title" xs12 sm6 md4 lg3)
+          v-card(flat)
+            div.event-img
+              v-img(:src="`/static/photo/${event.photo }`" aspect-ratio="1.7")
+            v-card-title
+              a(:href="`${event.sponsorLink}`" target="_blank").sponsor-name {{ event.sponsor }}
+              h2.event-title {{ event.title }}
+            v-card-text
+              p {{ event.location }}
 </template>
 
 <script>
 import eventsList from '../../assets/db'
+import Navbar from '../Navbar/Navbar'
 export default {
   name: 'index',
+  components: {Navbar},
   data: () => ({
     db: eventsList
   })
 }
 </script>
 <style lang="scss" scoped>
+  .main-title {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
   .v-card {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    .event-img {
+      overflow: hidden;
+    }
     .v-image {
       border-radius: 8px;
+    }
+    .v-image:hover {
+      transform: scale(1.2);
+      transition: 1s ease all;
     }
     &__title {
       padding: 14px 0 0;
