@@ -27,7 +27,7 @@ export default {
     .v-image {
       border-radius: 8px;
     }
-     &__title {
+    &__title {
       padding: 14px 0 0;
       text-align: left;
       .sponsor-name {
