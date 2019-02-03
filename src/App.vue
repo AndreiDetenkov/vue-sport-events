@@ -1,11 +1,17 @@
 <template lang="pug">
   v-app
-    router-view
+    v-content
+      Navbar
+      router-view
+      Footer
 </template>
 
 <script>
+import Navbar from './components/Navbar/Navbar'
+import Footer from './components/Footer/Footer'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {Footer, Navbar}
 }
 </script>
 
@@ -23,5 +29,8 @@ export default {
     &__content {
       border-bottom: 1px solid #ebebeb;
     }
+  }
+  .v-footer {
+    border-top: 1px solid #ebebeb;
   }
 </style>

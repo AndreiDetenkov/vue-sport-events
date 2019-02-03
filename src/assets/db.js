@@ -5,16 +5,12 @@ export default {
       distance: 'Шоссе 25 км | Мтб 25 КМ',
       date: '31 марта 2019',
       location: 'Объездная дорога, 9-й км (Чуйская область)',
-      social: {
-        instagram: 'https://www.instagram.com/nomadsport_bishkek/',
-        facebook: 'https://www.facebook.com/nomadsportkg/'
-      },
       sponsor: 'NomadSport',
       photo: 'split-race1.jpg',
       sponsorLink: 'https://www.nomadsport.kg/'
     },
     {
-      title: 'Международный марафон Run the Silk Road',
+      title: 'Первый Ошский Международный марафон',
       distance: '3км | 10км | 21км | 42км',
       date: '6 апреля 2019',
       location: 'г.Ош., площадь Областной администрации',
