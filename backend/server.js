@@ -3,6 +3,8 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const config = require("./config");
 
+const events = require('./app/events');
+
 const app = express();
 
 const port = 8000;
@@ -18,7 +20,7 @@ const db = mongoose.connection;
 db.once("open", () => {
   console.log("Mongoose connected!");
 
-  // app.use('/users', users());
+  app.use('/events', events());
 
   app.listen(port, () => {
     console.log(`Server started on ${port} port!`);
