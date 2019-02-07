@@ -9,11 +9,13 @@
           v-model="distance"
           label="Дистанция")
         v-text-field(
+          v-model="location"
+          label="Место проведения")
+        v-text-field(
           v-model="sponsor"
           label="Организатор")
         v-text-field(
           v-model="sponsorLink"
-          placeholder="https://www.google.com"
           label="Ссылка на сайт организатора")
         v-menu(
           ref="menu"
@@ -52,6 +54,8 @@ export default {
   data: () => ({
     title: '',
     distance: '',
+    location: '',
+    description: '',
     date: '',
     menu: false,
     sponsor: '',
