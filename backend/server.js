@@ -1,7 +1,7 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-const config = require("./config");
+const express = require('express');
+const cors = require('cors');
+const mongoose = require('mongoose');
+const config = require('./config');
 
 const events = require('./app/events');
 
@@ -11,19 +11,21 @@ const port = 8000;
 
 app.use(cors());
 app.use(express.json());
-app.use(express.static("public"));
+app.use(express.static('public'));
 
-mongoose.connect(config.db.url + "/" + config.db.name,  { useNewUrlParser: true });
+mongoose.connect(config.db.url + '/' + config.db.name, {
+  useCreateIndex: true,
+  useNewUrlParser: true
+});
 
 const db = mongoose.connection;
 
-db.once("open", () => {
-  console.log("Mongoose connected!");
+db.once('open', () => {
+  console.log('Mongoose connected!');
 
-  app.use('/events', events());
+  app.use('/event', events());
 
   app.listen(port, () => {
     console.log(`Server started on ${port} port!`);
   });
-
 });

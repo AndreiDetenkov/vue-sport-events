@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 const EventSchema = new Schema({
   title: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   distance: {
     type: String,
@@ -23,10 +24,9 @@ const EventSchema = new Schema({
     type: String,
     required: true
   },
-  // description: {
-  //   type: String,
-  //   required: true
-  // },
+  description: {
+    type: String
+  },
   date: {
     type: String,
     required: true
@@ -35,10 +35,9 @@ const EventSchema = new Schema({
     type: String,
     required: true
   },
-  // images: {
-  //   type: Array,
-  //   required: true
-  // }
+  images: {
+    type: Array
+  }
 });
 
 const Event = mongoose.model('Event', EventSchema);
