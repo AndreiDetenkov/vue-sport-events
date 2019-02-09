@@ -1,5 +1,6 @@
 <template lang="pug">
  .main
+   Navbar
    v-container(grid-list-lg)
      v-layout(row justify-center)
        v-flex(xs12)
@@ -26,11 +27,12 @@
 </template>
 
 <script>
-import eventsList from '../../assets/db'
-import Footer from '../Footer/Footer'
+import eventsList from '../../../assets/db'
+import Footer from '../../Footer/Footer'
+import Navbar from '../../Navbar/Navbar'
 export default {
   name: 'index',
-  components: { Footer },
+  components: { Navbar, Footer },
   data: () => ({
     db: eventsList
   }),

@@ -1,15 +1,12 @@
 <template lang="pug">
   v-app
     v-content
-      Navbar
       router-view
 </template>
 
 <script>
-import Navbar from './components/Navbar/Navbar'
 export default {
-  name: 'App',
-  components: { Navbar }
+  name: 'App'
 }
 </script>
 

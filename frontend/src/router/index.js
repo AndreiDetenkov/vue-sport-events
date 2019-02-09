@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import EventsList from '../components/EventsList/EventsList'
-import EventItem from '../components/EventItem/EventItem'
-import AddEvent from '../components/AddEvent/AddEvent'
+import EventsList from '@/components/Event/EventsList/EventsList'
+import EventItem from '@/components/Event/EventItem/EventItem'
+import Admin from '@/components/Admin/Admin'
+import AddEvent from '@/components/Admin/AddEvent/AddEvent'
 
 Vue.use(Router)
 
@@ -21,9 +22,16 @@ export default new Router({
       props: true
     },
     {
-      path: '/events/add',
-      name: 'add-event',
-      component: AddEvent
+      path: '/admin',
+      name: 'admin',
+      component: Admin,
+      children: [
+        {
+          path: '/admin/add-event',
+          name: 'add-event',
+          component: AddEvent
+        }
+      ]
     },
     {
       path: '*',
