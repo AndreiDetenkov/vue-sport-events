@@ -53,14 +53,17 @@ export default {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     .event-img {
-      overflow: hidden;
+
+      border-radius: 8px;
+      perspective: 400px;
     }
     .v-image {
       border-radius: 8px;
     }
     .v-image:hover {
-      transform: scale(1.2);
-      transition: 1s ease all;
+      transform: rotate3d(0, 1, 0, 15deg);
+      transition: 0.5s ease all;
+      box-shadow: 0 3px 15px 0 rgba(50, 50, 50, 0.7)
     }
     &__title {
       padding: 16px 0 4px;

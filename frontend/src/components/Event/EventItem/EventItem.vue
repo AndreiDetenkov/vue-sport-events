@@ -4,8 +4,8 @@
     v-container
       v-layout(row justify-center)
         v-flex(xs12)
-          h2 «Хан горы - Апхилл ивент»
-    Footer
+          h5 {{ id }}
+    //Footer
 </template>
 
 <script>
@@ -13,7 +13,13 @@ import Navbar from '../../Navbar/Navbar'
 import Footer from '../../Footer/Footer'
 export default {
   name: 'EventItem',
-  components: { Footer, Navbar }
+  components: { Footer, Navbar },
+  props: {
+    id: {
+      type: String,
+      default: ''
+    }
+  }
 }
 </script>
 
