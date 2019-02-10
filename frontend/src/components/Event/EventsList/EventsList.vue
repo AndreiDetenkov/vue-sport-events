@@ -10,10 +10,19 @@
          v-card(flat)
            div.event-img
              v-img(
-              :src="`/static/photo/${event.photo }`",
-              @click.prevent="viewEventItem(event.id)",
-              alt="",
-              aspect-ratio="1.7")
+               :src="`/static/photo/${event.photo }`",
+               @click.prevent="viewEventItem(event.id)",
+               :alt="event.title",
+               aspect-ratio="1.7")
+               v-layout(
+                 slot="placeholder"
+                 fill-height
+                 align-center
+                 justify-center
+                 ma-0)
+                 v-progress-circular(
+                  indeterminate
+                  color="grey lighten-3")
            v-card-title
              a(
               :href="`${event.sponsorLink}`",
