@@ -5,8 +5,7 @@ const Schema = mongoose.Schema;
 const EventSchema = new Schema({
   title: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   distance: {
     type: String,
@@ -28,6 +27,10 @@ const EventSchema = new Schema({
     type: String
   },
   date: {
+    type: String,
+    required: true
+  },
+  dirId: {
     type: String,
     required: true
   },
