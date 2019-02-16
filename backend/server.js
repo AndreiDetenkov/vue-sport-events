@@ -3,6 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const config = require('./config');
 
+const admin = require('./app/admin');
 const events = require('./app/events');
 
 const app = express();
@@ -23,7 +24,8 @@ const db = mongoose.connection;
 db.once('open', () => {
   console.log('Mongoose connected!');
 
-  app.use('/event', events());
+  app.use('/admin', admin());
+  app.use('/events', events());
 
   app.listen(port, () => {
     console.log(`Server started on ${port} port!`);
