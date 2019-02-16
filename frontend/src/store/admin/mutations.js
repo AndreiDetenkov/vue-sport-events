@@ -8,5 +8,12 @@ export default {
   },
   LOADING_ADD_EVENT_BTN (state, payload) {
     state.loading.addEventBtn = payload
+  },
+  GET_EVENTS_LIST_SUCCESS (state, payload) {
+    state.eventsList = payload
+    state.errors.getEventsListError = null
+  },
+  GET_EVENTS_LIST_ERROR (state, error) {
+    state.errors.getEventsListError = error
   }
 }

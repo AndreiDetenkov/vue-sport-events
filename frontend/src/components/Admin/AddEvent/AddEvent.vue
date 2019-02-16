@@ -1,49 +1,62 @@
 <template lang="pug">
-  v-container(grid-list-md)
+  v-container(grid-list-lg)
+    v-layout(row justify-center).mb-3
+      h2 Добавление нового эвента
     v-layout(row wrap)
-      v-flex(xs6)
+      v-flex(xs12 md6)
         v-form(ref="form")
-          v-text-field(
-          v-model="event.title",
-          label="Название мероприятия")
-          v-text-field(
-          v-model="event.distance"
-          label="Дистанция")
-          v-text-field(
-          v-model="event.location"
-          label="Место проведения")
-          v-text-field(
-          v-model="event.sponsor"
-          label="Организатор")
-          v-text-field(
-          v-model="event.sponsorLink"
-          label="Ссылка на сайт организатора")
-          v-menu(
-          ref="menu"
-          :close-on-content-click="false"
-          v-model="menu"
-          full-width
-          min-width="290px")
-            v-text-field(
-            slot="activator"
-            v-model="event.date"
-            label="Дата мероприятия")
-            v-date-picker(
-            no-title
-            scrollable
-            ref="picker"
-            locale="ru"
-            v-model="event.date"
-            @change="save")
-      v-flex(xs6)
-        input(type="file" ref="file" @change="fileChange")
-    v-btn(color="primary" @click="addEvent", :loading="addEventBtn").my-4 Отправить
+          v-card
+            v-card-text
+              v-text-field(
+                v-model="event.title",
+                label="Название мероприятия")
+              v-text-field(
+                v-model="event.location"
+                label="Место проведения")
+              v-text-field(
+                v-model="event.sponsor"
+                label="Организатор")
+              v-text-field(
+                v-model="event.sponsorLink"
+                label="Ссылка на сайт организатора")
+              v-menu(
+                ref="menu"
+                :close-on-content-click="false"
+                v-model="menu"
+                full-width
+                min-width="290px")
+                v-text-field(
+                  slot="activator"
+                  v-model="event.date"
+                  label="Дата мероприятия")
+                v-date-picker(
+                  no-title
+                  scrollable
+                  ref="picker"
+                  locale="ru"
+                  v-model="event.date"
+                  @change="save")
+      v-flex(xs12 md6)
+        v-card.mb-3
+          v-card-title
+            v-layout(row justify-center)
+              div.image-preview
+                img(
+                  src=''
+                  ref="preview")
+          v-card-text
+            label(for="file" class="label")
+              v-icon.mr-2 photo
+              span Загрузить картинку
+            input(type="file" ref="file" @change="fileChange" id="file")
+    v-btn(color="primary" @click="addEvent", :loading="addEventBtn").my-4 Добавить
     Notification
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import Notification from '../../Common/Notiifcation/Notification'
+import nanoid from 'nanoid'
 // import moment from 'moment'
 // moment().format('LL')
 export default {
@@ -52,7 +65,6 @@ export default {
   data: () => ({
     event: {
       title: '',
-      distance: '',
       location: '',
       date: '',
       sponsor: '',
@@ -64,6 +76,20 @@ export default {
   }),
   mounted () {
     this.mutationSubscribe()
+  },
+  watch: {
+    'event.imagePreview': {
+      deep: true,
+      handler: function (val) {
+        if (val) {
+          let reader = new FileReader()
+          reader.addEventListener('load', function () {
+            this.$refs.preview.src = reader.result
+          }.bind(this), false)
+          reader.readAsDataURL(this.event.imagePreview)
+        }
+      }
+    }
   },
   computed: {
     ...mapState(['addEventBtn'])
@@ -77,10 +103,12 @@ export default {
     },
     addEvent () {
       const formData = new FormData()
+      const id = nanoid()
+      formData.append('dirId', id)
       Object.entries(this.event).forEach(
         ([key, value]) => formData.append(key, value)
       )
-      this.$store.dispatch('ADD_NEW_EVENT', formData)
+      this.$store.dispatch('ADD_NEW_EVENT_PREVIEW', formData)
     },
     mutationSubscribe () {
       this.$store.subscribe((mutation, state) => {
@@ -88,6 +116,7 @@ export default {
           case 'ADD_NEW_EVENT_SUCCESS':
             this.$refs.form.reset()
             this.$refs.file.value = ''
+            this.$refs.preview.src = ''
             this.$store.dispatch('NOTIFICATION',
               { open: true, color: 'success', text: state.admin.newEvent.message })
             break
@@ -103,5 +132,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .v-card {
+    padding: 16px;
+    &__title {
+      .image-preview {
+        width: 100%;
+        img {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+  input[type="file"] {
+    display: none;
+  }
+  .label {
+    border: 1px solid #c3c3c3;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    span {
+      display: inline-block;
+      transform: translateY(-3px);
+    }
+  }
 </style>

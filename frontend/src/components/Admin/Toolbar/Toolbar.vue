@@ -1,24 +1,22 @@
 <template lang="pug">
   .nav
-    v-navigation-drawer(app temporary absolute v-model="drawer")
-      v-list
-        v-list-tile
+    v-navigation-drawer(
+      app
+      hide-overlay
+      permanent
+      width="200"
+      v-model="drawer")
+      v-list()
+        v-list-tile(
+          v-for="item in this.drawerMenu",
+          :key="item.title",
+          @click="routerLink(item.link)")
           v-list-tile-action
-            v-icon dashboard
-          v-list-tile-title Add event
-    v-toolbar(color="primary" dark)
-      v-toolbar-side-icon(@click="drawer = true")
-      v-spacer
-      v-btn(icon)
-        v-icon library_books
-      router-link(to="/admin/add-event")
-        v-btn(icon)
-          v-icon library_add
-      v-btn(icon)
-        v-icon account_box
-      v-btn(icon)
-        v-icon exit_to_app
-
+            v-icon {{ item.icon }}
+          v-list-tile-content
+            v-list-tile-title {{ item.title }}
+    v-toolbar(color="white" flat)
+      <!--v-toolbar-side-icon(@click="drawer = true")-->
 </template>
 
 <script>
@@ -26,7 +24,18 @@ export default {
   name: 'Toolbar',
   data () {
     return {
-      drawer: false
+      drawer: true,
+      drawerMenu: [
+        {icon: 'library_books', title: 'Список', link: '/admin/events-list'},
+        {icon: 'library_add', title: 'Добавить', link: '/admin/add-event-preview'},
+        {icon: 'account_box', title: 'Кабинет'},
+        {icon: 'exit_to_app', title: 'Выход'}
+      ]
+    }
+  },
+  methods: {
+    routerLink (link) {
+      this.$router.push({ path: `${link}` })
     }
   }
 }

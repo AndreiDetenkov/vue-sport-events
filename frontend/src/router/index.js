@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import EventsList from '@/components/Event/EventsList/EventsList'
 import EventItem from '@/components/Event/EventItem/EventItem'
 import Admin from '@/components/Admin/Admin'
 import AddEvent from '@/components/Admin/AddEvent/AddEvent'
+import EventsListPreview from '../components/Event/EventsListPreview/EventsListPreview'
+import EventsList from '../components/Admin/EventsList/EventsList'
 
 Vue.use(Router)
 
@@ -11,12 +12,12 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/events/list',
-      name: 'events-list',
-      component: EventsList
+      path: '/events-preview/list',
+      name: 'events-preview-list',
+      component: EventsListPreview
     },
     {
-      path: '/events/item/:id',
+      path: '/events/:id',
       name: 'event-item',
       component: EventItem,
       props: true
@@ -27,15 +28,20 @@ export default new Router({
       component: Admin,
       children: [
         {
-          path: '/admin/add-event',
+          path: '/admin/add-event-preview',
           name: 'add-event',
           component: AddEvent
+        },
+        {
+          path: '/admin/events-list',
+          name: 'events-list',
+          component: EventsList
         }
       ]
     },
     {
       path: '*',
-      redirect: { path: '/events/list' }
+      redirect: { path: '/events-preview/list' }
     }
   ]
 })
