@@ -1,5 +1,5 @@
 export default {
-  newEvent: '',
+  newEvent: {},
   errors: {
     newEventError: null,
     getEventsListError: null

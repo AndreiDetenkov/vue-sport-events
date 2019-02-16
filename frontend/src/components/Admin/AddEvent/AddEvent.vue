@@ -1,7 +1,7 @@
 <template lang="pug">
   v-container(grid-list-lg)
     v-layout(row justify-center).mb-3
-      h2 Добавление нового эвента
+      h2 Добавление нового эвента для превью
     v-layout(row wrap)
       v-flex(xs12 md6)
         v-form(ref="form")
@@ -9,15 +9,19 @@
             v-card-text
               v-text-field(
                 v-model="event.title",
+                :rules="[v => !!v || 'Это обязательное поле']"
                 label="Название мероприятия")
               v-text-field(
                 v-model="event.location"
+                :rules="[v => !!v || 'Это обязательное поле']"
                 label="Место проведения")
               v-text-field(
                 v-model="event.sponsor"
+                :rules="[v => !!v || 'Это обязательное поле']"
                 label="Организатор")
               v-text-field(
                 v-model="event.sponsorLink"
+                :rules="[v => !!v || 'Это обязательное поле']"
                 label="Ссылка на сайт организатора")
               v-menu(
                 ref="menu"
@@ -28,6 +32,7 @@
                 v-text-field(
                   slot="activator"
                   v-model="event.date"
+                  :rules="[v => !!v || 'Это обязательное поле']",
                   label="Дата мероприятия")
                 v-date-picker(
                   no-title
@@ -102,13 +107,18 @@ export default {
       this.$refs.menu.save(date)
     },
     addEvent () {
-      const formData = new FormData()
-      const id = nanoid()
-      formData.append('dirId', id)
-      Object.entries(this.event).forEach(
-        ([key, value]) => formData.append(key, value)
-      )
-      this.$store.dispatch('ADD_NEW_EVENT_PREVIEW', formData)
+      if (this.$refs.form.validate()) {
+        const formData = new FormData()
+        const id = nanoid()
+        formData.append('dirId', id)
+        Object.entries(this.event).forEach(
+          ([key, value]) => formData.append(key, value)
+        )
+        this.$store.dispatch('ADD_NEW_EVENT_PREVIEW', formData)
+      } else {
+        this.$store.dispatch('NOTIFICATION',
+          { open: true, color: 'error', text: 'Необходимо заполнить все поля!' })
+      }
     },
     mutationSubscribe () {
       this.$store.subscribe((mutation, state) => {

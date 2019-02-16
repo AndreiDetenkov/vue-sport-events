@@ -5,16 +5,17 @@ export default {
     axios({
       method: 'POST',
       url: 'http://localhost:8000/admin/add-event-preview',
-      data: formData,
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+      data: formData
     }).then(response => {
-      // console.log(response.data)
-      commit('ADD_NEW_EVENT_SUCCESS', response.data)
+      console.log(response)
+      if (response.data) {
+        commit('ADD_NEW_EVENT_SUCCESS', response.data)
+      }
       commit('LOADING_ADD_EVENT_BTN', false)
     }).catch(error => {
-      commit('ADD_NEW_EVENT_ERROR', error.response.data.message)
+      if (error.response) {
+        commit('ADD_NEW_EVENT_ERROR', error.response.data.message)
+      }
       commit('LOADING_ADD_EVENT_BTN', false)
     })
   },
