@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import EventItem from '@/components/Event/EventItem/EventItem'
 import Admin from '@/components/Admin/Admin'
 import AddEvent from '@/components/Admin/AddEvent/AddEvent'

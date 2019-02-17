@@ -8,6 +8,7 @@ import moment from 'moment'
 import 'moment/locale/ru'
 import firebase from 'firebase/app'
 import firebaseConfig from './config/firebase'
+import interceptors from './axios'
 
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'nprogress/nprogress.css'
@@ -20,7 +21,7 @@ firebase.initializeApp(firebaseConfig)
 Vue.use(Vuetify, {
   iconfont: 'md'
 })
-
+interceptors()
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

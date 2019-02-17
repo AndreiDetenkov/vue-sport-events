@@ -5,7 +5,7 @@ export default {
       method: 'GET',
       url: 'http://localhost:8000/events/preview/list'
     }).then(response => {
-      console.log(response.data)
+      // console.log(response.data)
       if (response.data) {
         commit('GET_PREVIEW_EVENTS_LIST_SUCCESS', response.data)
       }

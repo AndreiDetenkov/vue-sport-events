@@ -1,5 +1,6 @@
 import axios from 'axios'
-import { store } from './store/index'
+import store from './store/index'
+import NProgress from 'nprogress'
 
 export default function interceptors () {
   axios.interceptors.request.use(function (config) {
@@ -7,6 +8,7 @@ export default function interceptors () {
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }
+    NProgress.start()
     return config
   }, function (error) {
     // Do something with request error
@@ -14,6 +16,7 @@ export default function interceptors () {
   })
 
   axios.interceptors.response.use(function (response) {
+    NProgress.done()
     return response
   }, function (error) {
     // if (error.response.status === 400) {}
