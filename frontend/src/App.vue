@@ -37,7 +37,7 @@ export default {
   }
   .slide-fade-enter, .slide-fade-leave-to
     /* .slide-fade-leave-active до версии 2.1.8 */ {
-    transform: translateX(10px);
+    /*transform: translateX(10px);*/
     opacity: 0;
   }
 </style>

@@ -8,8 +8,9 @@ import moment from 'moment'
 import 'moment/locale/ru'
 import firebase from 'firebase/app'
 import firebaseConfig from './config/firebase'
+
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import ImageUploader from 'vue-image-upload-resize'
+import 'nprogress/nprogress.css'
 
 Vue.config.productionTip = false
 
@@ -19,7 +20,6 @@ firebase.initializeApp(firebaseConfig)
 Vue.use(Vuetify, {
   iconfont: 'md'
 })
-Vue.use(ImageUploader)
 
 /* eslint-disable no-new */
 new Vue({

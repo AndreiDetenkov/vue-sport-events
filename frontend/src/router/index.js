@@ -17,7 +17,7 @@ export default new Router({
       component: EventsListPreview
     },
     {
-      path: '/events/:id',
+      path: '/events/item/:id',
       name: 'event-item',
       component: EventItem,
       props: true

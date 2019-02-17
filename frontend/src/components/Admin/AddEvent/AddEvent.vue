@@ -124,11 +124,11 @@ export default {
       this.$store.subscribe((mutation, state) => {
         switch (mutation.type) {
           case 'ADD_NEW_EVENT_SUCCESS':
+            this.$store.dispatch('NOTIFICATION',
+              { open: true, color: 'success', text: state.admin.newEvent.message })
             this.$refs.form.reset()
             this.$refs.file.value = ''
             this.$refs.preview.src = ''
-            this.$store.dispatch('NOTIFICATION',
-              { open: true, color: 'success', text: state.admin.newEvent.message })
             break
           case 'ADD_NEW_EVENT_ERROR':
             this.$store.dispatch('NOTIFICATION',

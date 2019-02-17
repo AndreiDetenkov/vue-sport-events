@@ -1,3 +1,4 @@
+// import moment from 'moment'
 export default {
   ADD_NEW_EVENT_SUCCESS (state, payload) {
     state.newEvent = payload
@@ -10,6 +11,9 @@ export default {
     state.loading.addEventBtn = payload
   },
   GET_EVENTS_LIST_SUCCESS (state, payload) {
+    // payload.map(item => {
+    //   item.date = moment(item.date).format('LL')
+    // })
     state.eventsList = payload
     state.errors.getEventsListError = null
   },

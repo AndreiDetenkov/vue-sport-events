@@ -4,14 +4,14 @@
    v-container(grid-list-lg)
      v-layout(row justify-center)
        v-flex(xs12)
-        h1.main-title Календарь спортивных мероприятий в Кыргызстане на 2019 год
+        h1.main-title Календарь спортивных мероприятий на 2019 год
      v-layout(row wrap)
-       v-flex(v-for="event in db.springEvents", :key="event.title" xs12 sm6 md4 lg3)
+       v-flex(v-for="event in list", :key="event._id" xs12 sm6 md4 lg3)
          v-card(flat)
            div.event-img
              v-img(
-               :src="`/static/photo/${event.photo }`",
-               @click.prevent="viewEventItem(event.id)",
+               :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
+               @click.prevent="viewEventItem(event._id)",
                :alt="event.title",
                aspect-ratio="1.7")
                v-layout(
@@ -24,11 +24,9 @@
                   indeterminate
                   color="grey lighten-3")
            v-card-title
-             a(
-              :href="`${event.sponsorLink}`",
-              target="_blank").sponsor-name {{ event.sponsor }}
-             h4(
-              @click.prevent="viewEventItem(event.id)").event-title {{ event.title }}
+             a(:href="`${event.sponsorLink}`",
+               target="_blank").sponsor-name {{ event.sponsor }}
+             h4(@click.prevent="viewEventItem(event._id)").event-title {{ event.title }}
            v-card-text
              p {{ event.location }}
            v-divider.mb-2.hidden-sm-and-up
@@ -36,15 +34,22 @@
 </template>
 
 <script>
-import eventsList from '../../../assets/db'
+import {mapState} from 'vuex'
 import Footer from '../../Footer/Footer'
 import Navbar from '../../Navbar/Navbar'
 export default {
   name: 'index',
   components: { Navbar, Footer },
   data: () => ({
-    db: eventsList
   }),
+  mounted () {
+    this.$store.dispatch('GET_PREVIEW_EVENTS_LIST')
+  },
+  computed: {
+    ...mapState({
+      list: state => state.events.previewEventsList
+    })
+  },
   methods: {
     viewEventItem (id) {
       this.$router.push({ path: `/events/item/${id}` })
