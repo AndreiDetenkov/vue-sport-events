@@ -4,7 +4,7 @@ const nanoid = require('nanoid');
 const path = require('path');
 const fs = require('fs-extra');
 const config = require('../config');
-const Event = require('../models/events');
+const Events = require('../models/Events');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -58,9 +58,9 @@ const createRouter = () => {
     //   });
     // }
 
-    const eventPreview = new Event(data);
+    const eventPreview = new Events(data);
 
-    // const dir = await Event.findOne({dirId: data.dirId});
+    // const dir = await Events.findOne({dirId: data.dirId});
     // if (dir) {
     //   res.status(400).send({
     //     message: `Такой id - ${data.dirId} уже есть в БД!`const title = await Event.findOne({ title: data.title });
@@ -73,7 +73,7 @@ const createRouter = () => {
     // }
 
     try {
-      const title = await Event.findOne({ title: data.title });
+      const title = await Events.findOne({ title: data.title });
       if (title) {
         res.status(400).send({
           message: `Такое название - ${data.title} уже есть в БД!`
@@ -94,10 +94,16 @@ const createRouter = () => {
   });
 
   router.get('/events/list', async (req, res) => {
-    const events = await Event.find({});
+    const events = await Events.find({}).sort({date: 1});
     if (events.length > 0) res.status(200).send(events);
     else res.status(404).send({ message: 'Не найдено ни одного эвента!' })
   });
+
+  router.get('/events/items', async (req, res) => {
+    const array = await Events.find({}).sort({date: 1}).select('title');
+    if (array.length > 0) res.status(200).send(array);
+    else res.status(404).send({message: 'Не найдено ни одного эвента!'})
+  })
 
   return router;
 };

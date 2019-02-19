@@ -1,5 +1,5 @@
 <template lang="pug">
-  .admin
+  v-app
     Toolbar
     router-view
 </template>
@@ -12,7 +12,3 @@ export default {
   components: { AddEvent, Toolbar }
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>

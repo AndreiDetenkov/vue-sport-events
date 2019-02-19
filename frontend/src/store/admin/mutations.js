@@ -11,13 +11,17 @@ export default {
     state.loading.addEventBtn = payload
   },
   GET_EVENTS_LIST_SUCCESS (state, payload) {
-    // payload.map(item => {
-    //   item.date = moment(item.date).format('LL')
-    // })
     state.eventsList = payload
     state.errors.getEventsListError = null
   },
   GET_EVENTS_LIST_ERROR (state, error) {
     state.errors.getEventsListError = error
+  },
+  GET_EVENTS_TITLE_LIST_SUCCESS (state, payload) {
+    state.eventsTitle = payload
+    state.errors.getEventsTitleError = null
+  },
+  GET_EVENTS_TITLE_LIST_ERROR (state, error) {
+    state.errors.getEventsTitleError = error
   }
 }

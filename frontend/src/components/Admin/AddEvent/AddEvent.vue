@@ -1,12 +1,12 @@
 <template lang="pug">
   v-container(grid-list-lg)
     v-layout(row justify-center).mb-3
-      h2 Добавление нового эвента для превью
+      h2 Добавление нового превью
     v-layout(row wrap)
       v-flex(xs12 md6)
-        v-form(ref="form")
-          v-card
-            v-card-text
+        v-card(class="elevation-4")
+          v-card-text
+            v-form(ref="form")
               v-text-field(
                 v-model="event.title",
                 :rules="[v => !!v || 'Это обязательное поле']"
@@ -42,7 +42,7 @@
                   v-model="event.date"
                   @change="save")
       v-flex(xs12 md6)
-        v-card.mb-3
+        v-card(class="elevation-4").mb-3
           v-card-title
             v-layout(row justify-center)
               div.image-preview

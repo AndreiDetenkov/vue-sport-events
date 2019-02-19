@@ -2,6 +2,8 @@ import axios from 'axios'
 import store from './store/index'
 import NProgress from 'nprogress'
 
+axios.defaults.baseURL = 'http://localhost:8000'
+
 export default function interceptors () {
   axios.interceptors.request.use(function (config) {
     let token = localStorage.getItem('token') || ''

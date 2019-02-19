@@ -1,5 +1,4 @@
 <template lang="pug">
-  v-container
     v-layout(row justify-center)
       v-flex(xs12)
         v-data-table(
@@ -38,4 +37,3 @@ export default {
 <style lang="scss" scoped>
 
 </style>
-s

@@ -3,7 +3,7 @@ export default {
   GET_PREVIEW_EVENTS_LIST ({ commit }) {
     axios({
       method: 'GET',
-      url: 'http://localhost:8000/events/preview/list'
+      url: '/events/preview/list'
     }).then(response => {
       // console.log(response.data)
       if (response.data) {
