@@ -1,60 +1,61 @@
 <template lang="pug">
-  v-container(grid-list-lg)
-    v-layout(row justify-center).mb-3
-      h2 Добавление нового превью
-    v-layout(row wrap)
-      v-flex(xs12 md6)
-        v-card(class="elevation-4")
-          v-card-text
-            v-form(ref="form")
-              v-text-field(
-                v-model="event.title",
-                :rules="[v => !!v || 'Это обязательное поле']"
-                label="Название мероприятия")
-              v-text-field(
-                v-model="event.location"
-                :rules="[v => !!v || 'Это обязательное поле']"
-                label="Место проведения")
-              v-text-field(
-                v-model="event.sponsor"
-                :rules="[v => !!v || 'Это обязательное поле']"
-                label="Организатор")
-              v-text-field(
-                v-model="event.sponsorLink"
-                :rules="[v => !!v || 'Это обязательное поле']"
-                label="Ссылка на сайт организатора")
-              v-menu(
-                ref="menu"
-                :close-on-content-click="false"
-                v-model="menu"
-                full-width
-                min-width="290px")
+  .add-event
+    v-container(grid-list-lg)
+      v-layout(row justify-center).mb-3
+        h2 Добавление нового превью
+      v-layout(row wrap)
+        v-flex(xs12 md6)
+          v-card(class="elevation-4")
+            v-card-text
+              v-form(ref="form")
                 v-text-field(
-                  slot="activator"
-                  v-model="event.date"
-                  :rules="[v => !!v || 'Это обязательное поле']",
-                  label="Дата мероприятия")
-                v-date-picker(
-                  no-title
-                  scrollable
-                  ref="picker"
-                  locale="ru"
-                  v-model="event.date"
-                  @change="save")
-      v-flex(xs12 md6)
-        v-card(class="elevation-4").mb-3
-          v-card-title
-            v-layout(row justify-center)
-              div.image-preview
-                img(
-                  src=''
-                  ref="preview")
-          v-card-text
-            label(for="file" class="label")
-              v-icon.mr-2 photo
-              span Загрузить картинку
-            input(type="file" ref="file" @change="fileChange" id="file")
-    v-btn(color="primary" @click="addEvent", :loading="addEventBtn").my-4 Добавить
+                  v-model="event.title",
+                  :rules="[v => !!v || 'Это обязательное поле']"
+                  label="Название мероприятия")
+                v-text-field(
+                  v-model="event.location"
+                  :rules="[v => !!v || 'Это обязательное поле']"
+                  label="Место проведения")
+                v-text-field(
+                  v-model="event.sponsor"
+                  :rules="[v => !!v || 'Это обязательное поле']"
+                  label="Организатор")
+                v-text-field(
+                  v-model="event.sponsorLink"
+                  :rules="[v => !!v || 'Это обязательное поле']"
+                  label="Ссылка на сайт организатора")
+                v-menu(
+                  ref="menu"
+                  :close-on-content-click="false"
+                  v-model="menu"
+                  full-width
+                  min-width="290px")
+                  v-text-field(
+                    slot="activator"
+                    v-model="event.date"
+                    :rules="[v => !!v || 'Это обязательное поле']",
+                    label="Дата мероприятия")
+                  v-date-picker(
+                    no-title
+                    scrollable
+                    ref="picker"
+                    locale="ru"
+                    v-model="event.date"
+                    @change="save")
+        v-flex(xs12 md6)
+          v-card(class="elevation-4").mb-3
+            v-card-title
+              v-layout(row justify-center)
+                div.image-preview
+                  img(
+                    src=''
+                    ref="preview")
+            v-card-text
+              label(for="file" class="label")
+                v-icon.mr-2 photo
+                span Загрузить картинку
+              input(type="file" ref="file" @change="fileChange" id="file")
+      v-btn(color="primary" @click="addEvent", :loading="addEventBtn").my-4 Добавить
     Notification
 </template>
 
@@ -142,28 +143,31 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .v-card {
-    padding: 16px;
-    &__title {
-      .image-preview {
-        width: 100%;
-        img {
-          max-width: 100%;
+  .add-event {
+    background: #f5f5f5;
+    .v-card {
+      padding: 16px;
+      &__title {
+        .image-preview {
+          width: 100%;
+          img {
+            max-width: 100%;
+          }
         }
       }
     }
-  }
-  input[type="file"] {
-    display: none;
-  }
-  .label {
-    border: 1px solid #c3c3c3;
-    display: inline-block;
-    padding: 6px 12px;
-    cursor: pointer;
-    span {
+    input[type="file"] {
+      display: none;
+    }
+    .label {
+      border: 1px solid #c3c3c3;
       display: inline-block;
-      transform: translateY(-3px);
+      padding: 6px 12px;
+      cursor: pointer;
+      span {
+        display: inline-block;
+        transform: translateY(-3px);
+      }
     }
   }
 </style>

@@ -8,6 +8,10 @@ const FullEventSchema = new Schema({
     ref: 'Events',
     require: true
   },
+  distance: {
+    type: String,
+    require: true
+  },
   description: {
     type: String,
     require: true

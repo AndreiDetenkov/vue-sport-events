@@ -1,33 +1,33 @@
 <template lang="pug">
-  v-container
-    v-layout(row justify-center)
-      v-flex(xs12)
-        v-card(class="elevation-4")
-          v-card-title
-            v-layout(row justify-center)
-              h2 Добавление нового эвента
-          v-card-text
-            v-form(ref="form")
-              v-layout(row justify-center)
-                v-flex(xs12 sm8)
-                  v-select(
-                    label="Название мероприятия",
-                    :items="eventTitle",
-                    item-text="title",
-                    item-value="_id",
-                        v-model="eventId")
-                  v-text-field(
-                    v-model="distance"
-                    label="Дистанция")
-                  v-textarea(
-                    label="Описание эвента"
-                    v-model="description")
-              v-layout(row justify-center)
-                v-flex(xs12 sm8)
-                  quill-editor(
-                  :content="content"
-                  ref="myQuillEditor"
-                  @change="onEditorChange($event)")
+  .full-event
+    v-container
+      v-layout(row justify-center).mb-3
+        h2 Добавление нового эвента
+      v-layout(row justify-center fill-height)
+        v-flex(xs12)
+          v-card(class="elevation-4")
+            v-card-text
+              v-form(ref="form")
+                v-layout(row justify-center).mb-2
+                  v-flex(xs12 sm8)
+                    v-select(
+                      label="Название мероприятия",
+                      :items="eventTitle",
+                      item-text="title",
+                      item-value="_id",
+                      v-model="eventId")
+                    v-text-field(
+                      label="Дистанция",
+                      v-model="distance")
+                    v-textarea(
+                      label="Описание эвента",
+                      v-model="description")
+                v-layout(row justify-center)
+                  v-flex(xs12)
+                    quill-editor(
+                    :content="content"
+                    ref="myQuillEditor"
+                    @change="onEditorChange($event)")
 </template>
 
 <script>
@@ -36,6 +36,7 @@ export default {
   name: 'AddFullEvent',
   data: () => ({
     eventId: '',
+    distance: '',
     dirId: '',
     content: '',
     description: ''
@@ -72,7 +73,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .v-card {
-    padding: 16px;
+  .full-event {
+    background: #f5f5f5;
+    .v-card {
+      padding: 16px;
+    }
   }
 </style>

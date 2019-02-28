@@ -4,7 +4,7 @@
    v-container(grid-list-lg)
      v-layout(row justify-center)
        v-flex(xs12)
-        h1.main-title Календарь спортивных мероприятий на 2019 год
+         h1.main-title Календарь спортивных мероприятий на <span class="year">2019 год</span>
      v-layout(row wrap)
        v-flex(v-for="event in list", :key="event._id" xs12 sm6 md4 lg3)
          v-card(flat)
@@ -24,17 +24,17 @@
                   indeterminate
                   color="grey lighten-3")
            v-card-title
-             a(:href="`${event.sponsorLink}`",
-               target="_blank").sponsor-name {{ event.sponsor }}
+             span.event-date {{ event.date }}
              h4(@click.prevent="viewEventItem(event._id)").event-title {{ event.title }}
            v-card-text
-             p {{ event.location }}
-           v-divider.mb-2.hidden-sm-and-up
+             a(:href="`${event.sponsorLink}`",
+             target="_blank").sponsor-name {{ event.sponsor }}
+           v-divider.my-2.hidden-sm-and-up
    Footer
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import Footer from '../../Footer/Footer'
 import Navbar from '../../Navbar/Navbar'
 export default {
@@ -58,16 +58,20 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+  .year {
+    color: #f6554d;
+  }
   .main-title {
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
     margin-bottom: 16px;
+    color: #454545;
   }
   .v-card {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
+    margin-bottom: 8px;
     .event-img {
-
       border-radius: 8px;
       perspective: 400px;
     }
@@ -75,24 +79,20 @@ export default {
       border-radius: 8px;
     }
     .v-image:hover {
-      transform: rotate3d(0, 1, 0, 15deg);
-      transition: 0.5s ease all;
-      box-shadow: 0 3px 15px 0 rgba(50, 50, 50, 0.7)
+      cursor: pointer;
+      /*transform: rotate3d(0, 1, 0, 15deg);*/
+      /*transition: 0.5s ease all;*/
+      /*box-shadow: 0 3px 15px 0 rgba(50, 50, 50, 0.7)*/
     }
     &__title {
-      padding: 16px 0 4px;
+      padding: 16px 0 0;
       text-align: left;
-      .sponsor-name {
+      .event-date {
         display: block;
-        color: #d7b914;
-        font-size: 0.85rem;
+        color: #f6554d;
+        font-size: 1rem;
         font-weight: 700;
-        text-transform: uppercase;
         margin-bottom: 4px;
-        text-decoration: none;
-      }
-      .sponsor-name:hover {
-        color: #b39909;
       }
       h4 {
         font-family: 'Montserrat', sans-serif;
@@ -103,15 +103,19 @@ export default {
         width: 100%;
       }
       h4:hover {
-        color: #616161;
+        color: #595651;
         cursor: pointer;
       }
     }
     &__text {
-      color: #8d8d8d;
-      font-size: 0.8rem;
       text-align: left;
       padding: 0;
+      .sponsor-name {
+        color: #504d49;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        text-decoration: none;
+      }
     }
   }
 </style>
