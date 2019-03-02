@@ -1,75 +1,79 @@
 <template lang="pug">
-  .add-event
-    v-container(grid-list-lg)
-      v-layout(row justify-center).mb-3
-        h2 Добавление нового эвента
-      v-layout(row wrap)
-        v-flex(xs12 md6)
-          v-card()
-            v-card-text
-              v-form(ref="form")
+  v-container(grid-list-lg)
+    v-layout(row wrap)
+      v-flex(xs12 md6)
+        v-card()
+          v-card-text
+            v-form(ref="form")
+              v-text-field(
+                v-model="event.title",
+                :rules="[v => !!v || 'Это обязательное поле']"
+                label="Название мероприятия",
+                required)
+              v-text-field(
+                v-model="event.location"
+                :rules="[v => !!v || 'Это обязательное поле']"
+                label="Место проведения",
+                required)
+              v-text-field(
+                label="Дистанция",
+                :rules="[v => !!v || 'Это обязательное поле']"
+                v-model="event.distance",
+                required)
+              v-text-field(
+                v-model="event.sponsor"
+                :rules="[v => !!v || 'Это обязательное поле']"
+                label="Организатор",
+                required)
+              v-text-field(
+                v-model="event.sponsorLink"
+                :rules="[v => !!v || 'Это обязательное поле']"
+                label="Ссылка на сайт организатора",
+                required)
+              v-menu(
+                ref="menu"
+                :close-on-content-click="false"
+                v-model="menu"
+                full-width
+                min-width="290px")
                 v-text-field(
-                  v-model="event.title",
-                  :rules="[v => !!v || 'Это обязательное поле']"
-                  label="Название мероприятия")
-                v-text-field(
-                  v-model="event.location"
-                  :rules="[v => !!v || 'Это обязательное поле']"
-                  label="Место проведения")
-                v-text-field(
-                  label="Дистанция",
-                  v-model="event.distance")
-                v-text-field(
-                  v-model="event.sponsor"
-                  :rules="[v => !!v || 'Это обязательное поле']"
-                  label="Организатор")
-                v-text-field(
-                  v-model="event.sponsorLink"
-                  :rules="[v => !!v || 'Это обязательное поле']"
-                  label="Ссылка на сайт организатора")
-                v-menu(
-                  ref="menu"
-                  :close-on-content-click="false"
-                  v-model="menu"
-                  full-width
-                  min-width="290px")
-                  v-text-field(
-                    slot="activator"
-                    v-model="event.date"
-                    :rules="[v => !!v || 'Это обязательное поле']",
-                    label="Дата мероприятия")
-                  v-date-picker(
-                    no-title
-                    scrollable
-                    ref="picker"
-                    locale="ru"
-                    v-model="event.date"
-                    @change="save")
-        v-flex(xs12 md6)
-          v-card().mb-3
-            v-card-title
-              v-layout(row justify-center)
-                div.image-preview
-                  img(
-                    src=''
-                    ref="preview")
-            v-card-text
-              label(for="file" class="label")
-                v-icon.mr-2 photo
-                span Загрузить превью
-              input(type="file" ref="file" @change="fileChange" id="file")
-      v-layout(row justify-center)
-        v-flex(xs12)
-          v-card()
-            v-card-text
-              v-textarea(
-              label="Описание эвента",
-              v-model="event.description")
-              quill-editor(
-              :content="event.content"
-              ref="myQuillEditor"
-              @change="onEditorChange($event)")
-      v-btn(color="primary" @click="addEvent", :loading="addEventBtn").my-4 Добавить
+                  slot="activator"
+                  v-model="event.date"
+                  :rules="[v => !!v || 'Это обязательное поле']",
+                  label="Дата мероприятия",
+                  required)
+                v-date-picker(
+                  no-title
+                  scrollable
+                  ref="picker"
+                  locale="ru"
+                  v-model="event.date"
+                  @change="save")
+      v-flex(xs12 md6)
+        v-card()
+          v-card-title
+            v-layout(row justify-center)
+              div.image-preview
+                img(
+                  src=''
+                  ref="preview")
+          v-card-text
+            label(for="file" class="label")
+              v-icon.mr-2 photo
+              span Загрузить превью
+            input(type="file" ref="file" @change="fileChange" id="file")
+    v-layout(row justify-center)
+      v-flex(xs12)
+        v-card()
+          v-card-text
+            v-textarea(
+            label="Описание эвента",
+            v-model="event.description").mb-3
+            quill-editor(
+            :content="event.content"
+            ref="myQuillEditor"
+            @change="onEditorChange($event)")
+    v-btn(color="primary" @click="addEvent", :loading="addEventBtn").my-4 Добавить
     Notification
 </template>
 
@@ -167,19 +171,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .add-event {
-    background: #f5f5f5;
+  .container {
     .v-card {
-      padding: 16px;
-      &__title {
-        .image-preview {
-          width: 100%;
-          img {
-            max-width: 100%;
-          }
-        }
-      }
-    }
+       padding: 16px;
+       &__title {
+         .image-preview {
+           width: 100%;
+           img {
+             max-width: 100%;
+           }
+         }
+       }
+     }
     input[type="file"] {
       display: none;
     }
@@ -192,6 +195,11 @@ export default {
         display: inline-block;
         transform: translateY(-3px);
       }
+    }
+    .v-btn {
+      max-width: 200px;
+      width: 100%;
+      height: 45px;
     }
   }
 </style>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import router from '../../router'
 export default {
   ADD_NEW_EVENT_PREVIEW ({ commit }, formData) {
     commit('LOADING_ADD_EVENT_BTN', true)
@@ -30,17 +30,16 @@ export default {
       commit('GET_EVENTS_LIST_ERROR', error)
     })
   },
-  GET_EVENTS_TITLE_LIST ({ commit }) {
+  LOGOUT ({ commit }) {
     axios({
-      method: 'GET',
-      url: '/admin/events/items'
+      method: 'DELETE',
+      url: '/users/sessions'
     }).then(response => {
-      // console.log(response.data)
-      commit('GET_EVENTS_TITLE_LIST_SUCCESS', response.data)
+      console.log(response.data.message)
+      localStorage.removeItem('token')
+      router.push({ path: '/login' })
     }).catch(error => {
-      if (error.response) {
-        commit('GET_EVENTS_TITLE_LIST_ERROR', error.response.data.message)
-      }
+      console.log(error.response)
     })
   }
 }

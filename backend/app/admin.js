@@ -76,7 +76,7 @@ const createRouter = () => {
       const title = await Events.findOne({ title: data.title });
       if (title) {
         res.status(400).send({
-          message: `Такое название - ${data.title} уже есть в БД!`
+          message: `Название - ${data.title} уже есть в БД!`
         });
       }
 
