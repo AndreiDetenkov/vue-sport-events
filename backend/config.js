@@ -7,5 +7,9 @@ module.exports = {
   db: {
     url: 'mongodb://localhost:27017',
     name: 'sportEvents'
+  },
+  jwt: {
+    secret: 'some secret for sport events',
+    expiresIn: '4h'
   }
 };

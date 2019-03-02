@@ -94,16 +94,10 @@ const createRouter = () => {
   });
 
   router.get('/events/list', async (req, res) => {
-    const events = await Events.find({}).sort({date: 1});
+    const events = await Events.find({}).sort({ date: 1 });
     if (events.length > 0) res.status(200).send(events);
     else res.status(404).send({ message: 'Не найдено ни одного эвента!' })
   });
-
-  router.get('/events/items', async (req, res) => {
-    const array = await Events.find({}).sort({date: 1}).select('title');
-    if (array.length > 0) res.status(200).send(array);
-    else res.status(404).send({message: 'Не найдено ни одного эвента!'})
-  })
 
   return router;
 };

@@ -5,6 +5,7 @@ const config = require('./config');
 
 const admin = require('./app/admin');
 const events = require('./app/events');
+const users = require('./app/users');
 
 const app = express();
 
@@ -26,6 +27,7 @@ db.once('open', () => {
 
   app.use('/admin', admin());
   app.use('/events', events());
+  app.use('/users', users());
 
   app.listen(port, () => {
     console.log(`Server started on ${port} port!`);
