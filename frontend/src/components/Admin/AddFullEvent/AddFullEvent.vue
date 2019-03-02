@@ -19,15 +19,16 @@
                     v-text-field(
                       label="Дистанция",
                       v-model="distance")
+
+                v-layout(row justify-center)
+                  v-flex(xs12)
                     v-textarea(
                       label="Описание эвента",
                       v-model="description")
-                v-layout(row justify-center)
-                  v-flex(xs12)
                     quill-editor(
-                    :content="content"
-                    ref="myQuillEditor"
-                    @change="onEditorChange($event)")
+                      :content="content"
+                      ref="myQuillEditor"
+                      @change="onEditorChange($event)")
 </template>
 
 <script>

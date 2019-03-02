@@ -4,13 +4,18 @@
       v-toolbar-title
        // {{ moment(Date.now()).format('LL') }}
       v-spacer
-      v-btn(icon)
+      v-btn(icon @click.prevent="login")
         v-icon(color="grey") input
 </template>
 
 <script>
 export default {
-  name: 'Navbar'
+  name: 'Navbar',
+  methods: {
+    login () {
+      this.$router.push({ path: '/login' })
+    }
+  }
 }
 </script>
 

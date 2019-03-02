@@ -38,7 +38,7 @@ import { mapState } from 'vuex'
 import Footer from '../../Footer/Footer'
 import Navbar from '../../Navbar/Navbar'
 export default {
-  name: 'index',
+  name: 'Events',
   components: { Navbar, Footer },
   data: () => ({
   }),

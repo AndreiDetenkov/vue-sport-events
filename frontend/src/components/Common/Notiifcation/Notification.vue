@@ -11,11 +11,16 @@
 export default ({
   name: 'Notification',
   data: () => ({
-    timeout: 0
+    timeout: 5000
   }),
   computed: {
-    snackbar () {
-      return this.$store.state.notification.open
+    snackbar: {
+      get () {
+        return this.$store.state.notification.open
+      },
+      set () {
+        console.log()
+      }
     },
     color () {
       return this.$store.state.notification.color

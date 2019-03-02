@@ -2,10 +2,10 @@
   .add-event
     v-container(grid-list-lg)
       v-layout(row justify-center).mb-3
-        h2 Добавление нового превью
+        h2 Добавление нового эвента
       v-layout(row wrap)
         v-flex(xs12 md6)
-          v-card(class="elevation-4")
+          v-card()
             v-card-text
               v-form(ref="form")
                 v-text-field(
@@ -16,6 +16,9 @@
                   v-model="event.location"
                   :rules="[v => !!v || 'Это обязательное поле']"
                   label="Место проведения")
+                v-text-field(
+                  label="Дистанция",
+                  v-model="event.distance")
                 v-text-field(
                   v-model="event.sponsor"
                   :rules="[v => !!v || 'Это обязательное поле']"
@@ -43,7 +46,7 @@
                     v-model="event.date"
                     @change="save")
         v-flex(xs12 md6)
-          v-card(class="elevation-4").mb-3
+          v-card().mb-3
             v-card-title
               v-layout(row justify-center)
                 div.image-preview
@@ -53,8 +56,19 @@
             v-card-text
               label(for="file" class="label")
                 v-icon.mr-2 photo
-                span Загрузить картинку
+                span Загрузить превью
               input(type="file" ref="file" @change="fileChange" id="file")
+      v-layout(row justify-center)
+        v-flex(xs12)
+          v-card()
+            v-card-text
+              v-textarea(
+              label="Описание эвента",
+              v-model="event.description")
+              quill-editor(
+              :content="event.content"
+              ref="myQuillEditor"
+              @change="onEditorChange($event)")
       v-btn(color="primary" @click="addEvent", :loading="addEventBtn").my-4 Добавить
     Notification
 </template>
@@ -72,10 +86,13 @@ export default {
     event: {
       title: '',
       location: '',
+      distance: '',
       date: '',
       sponsor: '',
       sponsorLink: '',
-      imagePreview: []
+      imagePreview: [],
+      content: '',
+      description: ''
     },
     menu: false,
     hasImage: false
@@ -98,7 +115,10 @@ export default {
     }
   },
   computed: {
-    ...mapState(['addEventBtn'])
+    ...mapState(['addEventBtn']),
+    editor () {
+      return this.$refs.myQuillEditor.quill
+    }
   },
   methods: {
     fileChange () {
@@ -137,6 +157,10 @@ export default {
             break
         }
       })
+    },
+    onEditorChange ({ quill, html, text }) {
+      console.log('editor change!', quill, html, text)
+      this.content = html
     }
   }
 }
