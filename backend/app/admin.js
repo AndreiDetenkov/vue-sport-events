@@ -41,6 +41,8 @@ const createRouter = () => {
     for (let el in req.body) {
       data[el] = req.body[el]
     }
+    delete data.lat
+    delete data.lng
 
     if (req.file) {
       data.imagePreview = req.file.filename
@@ -58,6 +60,8 @@ const createRouter = () => {
     //     message: 'Поля с картинками должны быть заполнены!', error: e.message
     //   });
     // }
+
+    data.gps = [req.body.lat, req.body.lng]
 
     const event = new Event(data);
 
@@ -87,7 +91,7 @@ const createRouter = () => {
   router.get('/events/list', async (req, res) => {
     const events = await Event.find({}).sort({ date: 1 });
     if (events.length > 0) res.status(200).send(events);
-    else res.status(404).send({ message: 'Не найдено ни одного эвента!' })
+    else res.status(200).send({ events, message: 'Нет эвентов в БД!' })
   });
 
   return router;

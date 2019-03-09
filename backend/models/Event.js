@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const Schema = mongoose.Schema;
 
 const EventSchema = new Schema({
@@ -21,7 +20,8 @@ const EventSchema = new Schema({
     required: true
   },
   gps: {
-    type: String,
+    type: [Number, Number],
+    index: '2d',
     required: true
   },
   distance: {
