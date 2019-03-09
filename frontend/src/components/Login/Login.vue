@@ -6,7 +6,9 @@
           v-form(ref="form", @submit.prevent="logIn")
             v-card
               v-card-title
-                h3(class="title") sportEvents
+                a(href="/")
+                  span.login__title sport
+                  span.login__title.login__title--red events
               v-card-text
                 v-text-field(
                   ref="login",
@@ -63,6 +65,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @font-face {
+    font-family: 'Ocean';
+    src: url('/static/fonts/Ocean.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
   #app {
     background: #757F9A;  /* fallback for old browsers */
     background: -webkit-linear-gradient(to right, #D7DDE8, #757F9A);  /* Chrome 10-25, Safari 5.1-6 */
@@ -74,12 +82,24 @@ export default {
       padding: 16px 32px;
       &__title {
         justify-content: center;
+        a {
+          text-decoration: none;
+        }
       }
       border-radius: 10px;
       .v-btn--round {
         max-width: 130px;
         width: 100%;
         height: 40px;
+      }
+      .login__title {
+        font-family: 'Ocean';
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: #504d49;
+        &--red {
+          color: #f6554d;
+        }
       }
     }
   }

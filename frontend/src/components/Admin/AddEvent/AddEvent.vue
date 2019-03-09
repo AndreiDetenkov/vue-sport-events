@@ -21,14 +21,9 @@
                 label="Место проведения",
                 required)
               v-text-field(
-                v-model="event.gps",
-                :rules="[v => !!v || 'Это обязательное поле']",
-                required,
-                label="Координаты GPS")
-              v-text-field(
                 v-model="event.sponsor"
                 :rules="[v => !!v || 'Это обязательное поле']"
-                label="Организатор",
+                label="Организатор (наименование)",
                 required)
               v-text-field(
                 v-model="event.sponsorLink"
@@ -54,6 +49,18 @@
                   locale="ru"
                   v-model="event.date"
                   @change="save")
+              v-text-field(
+                v-model="event.lat",
+                :rules="[v => !!v || 'Это обязательное поле']",
+                required,
+                type="number",
+                label="Координат Gps - LAT")
+              v-text-field(
+                v-model="event.lng",
+                :rules="[v => !!v || 'Это обязательное поле']",
+                required,
+                type="number",
+                label="Координаты Gps -LNG")
       v-flex(xs12 md6)
         v-card()
           v-card-title
@@ -95,7 +102,8 @@ export default {
     event: {
       title: '',
       location: '',
-      gps: '',
+      lat: '',
+      lng: '',
       distance: '',
       date: '',
       sponsor: '',

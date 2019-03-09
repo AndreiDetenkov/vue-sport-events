@@ -80,9 +80,9 @@ export default {
     }
     .v-image:hover {
       cursor: pointer;
-      /*transform: rotate3d(0, 1, 0, 15deg);*/
-      /*transition: 0.5s ease all;*/
-      /*box-shadow: 0 3px 15px 0 rgba(50, 50, 50, 0.7)*/
+      transform: rotate3d(0, 1, 0, 15deg);
+      transition: 0.5s ease all;
+      box-shadow: 0 3px 15px 0 rgba(50, 50, 50, 0.7)
     }
     &__title {
       padding: 16px 0 0;
@@ -90,15 +90,15 @@ export default {
       .event-date {
         display: block;
         color: #f6554d;
-        font-size: 1rem;
-        text-transform: uppercase;
+        font-size: 0.9rem;
         font-weight: 700;
+        text-transform: uppercase;
         margin-bottom: 4px;
       }
       h4 {
         font-family: 'Montserrat', sans-serif;
         color: #454545;
-        font-size: 1.14rem;
+        font-size: 1.1rem;
         font-weight: 700;
         text-transform: uppercase;
         width: 100%;

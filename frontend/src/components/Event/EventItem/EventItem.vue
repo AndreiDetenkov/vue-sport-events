@@ -10,7 +10,7 @@
             :alt="event.title",
             aspect-ratio="1.7")
               .image-date-box
-              span {{ moment(this.event.date).format('LL') }}
+                span {{ moment(this.event.date).format('LL') }}
           h1 {{ event.title }}
       v-layout.mb-4
         v-flex(xs12)
@@ -25,14 +25,14 @@
       v-layout(justify-center row)
         v-flex(xs12 lg10)
           yandex-map(
-            :coords="[42.921928, 74.745694]"
+            :coords="event.gps"
             zoom="12"
             style="width: 100%; height: 500px;"
             map-type="hybrid")
             ymap-marker(
               marker-id="event._id"
               marker-type="placemark"
-              :coords="[42.921928, 74.745694]"
+              :coords="event.gps"
               hint-content="Hint content 1"
               :balloon="{header: 'header', body: 'body', footer: 'footer'}"
               :icon="{color: 'red', glyph: ''}"
@@ -104,7 +104,7 @@ export default {
           content: '';
           top: 32px;
           left: 0;
-          width: 256px;
+          width: 300px;
           height: 70px;
           background: #fff;
           border-top-right-radius: 8px;
@@ -113,8 +113,10 @@ export default {
         span {
           position: absolute;
           content: '';
-          top: 48px;
-          left: 16px;
+          top: 50%;
+          margin-top: -19px;
+          left: 50%;
+          margin-left: -130px;
           color: #f6554d;
           font-size: 1.8rem;
           font-weight: 700;

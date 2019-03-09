@@ -2,7 +2,9 @@
   .header
     v-toolbar(flat color="white")
       v-toolbar-title
-       // {{ moment(Date.now()).format('LL') }}
+        a(href="/")
+          span.header__title sport
+          span.header__title.header__title--red events
       v-spacer
       v-btn(icon @click.prevent="login")
         v-icon(color="grey") input
@@ -20,8 +22,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @font-face {
+    font-family: 'Ocean';
+    src: url('/static/fonts/Ocean.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
   .v-toolbar__title {
-    color: #504d49;
-    font-size: 0.8rem;
+    a {
+      text-decoration: none;
+      color: #504d49
+    }
+    .header__title {
+      font-family: 'Ocean';
+      font-size: 1.5rem;
+      font-weight: 900;
+      &--red {
+        color: #f6554d;
+      }
+    }
   }
 </style>
