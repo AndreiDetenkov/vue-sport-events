@@ -1,6 +1,6 @@
 import axios from 'axios'
 import store from './store/index'
-// import NProgress from 'nprogress'
+import NProgress from 'nprogress'
 
 axios.defaults.baseURL = 'http://localhost:8000'
 
@@ -10,7 +10,7 @@ export default function interceptors () {
     if (token) {
       config.headers['Token'] = `${token}`
     }
-    // NProgress.start()
+    NProgress.start()
     return config
   }, function (error) {
     // Do something with request error
@@ -18,7 +18,7 @@ export default function interceptors () {
   })
 
   axios.interceptors.response.use(function (response) {
-    // NProgress.done()
+    NProgress.done()
     return response
   }, function (error) {
     // if (error.response.status === 400) {}

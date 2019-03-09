@@ -8,7 +8,7 @@ export default {
       url: '/admin/add-event-preview',
       data: formData
     }).then(response => {
-      console.log(response)
+      // console.log(response)
       if (response.data) {
         commit('ADD_NEW_EVENT_SUCCESS', response.data)
       }

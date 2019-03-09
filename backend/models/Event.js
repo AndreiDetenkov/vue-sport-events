@@ -20,6 +20,10 @@ const EventSchema = new Schema({
     type: String,
     required: true
   },
+  gps: {
+    type: String,
+    required: true
+  },
   distance: {
     type: String,
     required: true
@@ -46,6 +50,6 @@ const EventSchema = new Schema({
   }
 });
 
-const Events = mongoose.model('Events', EventSchema);
+const Event = mongoose.model('Event', EventSchema);
 
-module.exports = Events;
+module.exports = Event;

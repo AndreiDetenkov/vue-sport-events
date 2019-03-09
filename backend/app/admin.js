@@ -4,7 +4,7 @@ const nanoid = require('nanoid');
 const path = require('path');
 const fs = require('fs-extra');
 const config = require('../config');
-const Events = require('../models/Events');
+const Event = require('../models/Event');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -25,6 +25,8 @@ const createRouter = () => {
   // const uploadFiles = upload.fields([
   //   { name: 'imagePreview', maxCount: 1 }, { name: 'images', maxCount: 10 }
   // ]);
+
+  // -----------------  сохранение нового эвента в БД  ---------------------
   router.post('/add-event-preview', upload.single('imagePreview'), async (req, res) => {
     Object.keys(req.body).forEach(item => {
       if (req.body[item] === '') {
@@ -32,18 +34,17 @@ const createRouter = () => {
       }
     });
 
-    const data = {
-      title: req.body.title,
-      sponsor: req.body.sponsor,
-      sponsorLink: req.body.sponsorLink,
-      location: req.body.location,
-      date: req.body.date,
-      dirId: req.body.dirId
-    };
+    // console.log('req: ', req.body)
+
+    const data = {};
+
+    for (let el in req.body) {
+      data[el] = req.body[el]
+    }
 
     if (req.file) {
       data.imagePreview = req.file.filename
-    } else res.status(400).send({ message: 'Фото является обязательным полем!' })
+    } else res.status(400).send({ message: 'Не добавлена фотография!' })
 
     // try {
     //   if (Object.keys(req.files).length === 2) {
@@ -58,32 +59,21 @@ const createRouter = () => {
     //   });
     // }
 
-    const eventPreview = new Events(data);
-
-    // const dir = await Events.findOne({dirId: data.dirId});
-    // if (dir) {
-    //   res.status(400).send({
-    //     message: `Такой id - ${data.dirId} уже есть в БД!`const title = await Event.findOne({ title: data.title });
-    //     if (title) {
-    //       res.status(400).send({
-    //         message: `Такое название - ${data.title} уже есть в БД!`
-    //       });
-    //     }
-    //   });
-    // }
+    const event = new Event(data);
 
     try {
-      const title = await Events.findOne({ title: data.title });
+      const title = await Event.findOne({ title: data.title });
       if (title) {
         res.status(400).send({
           message: `Название - ${data.title} уже есть в БД!`
         });
       }
 
-      const newEvent = await eventPreview.save();
+      const newEvent = await event.save();
       if (newEvent) {
         res.status(200).send({
-          message: `Эвент - ${data.title} успешно добавлен в БД`, event: newEvent
+          message: `Эвент - ${data.title} успешно добавлен в БД`,
+          event: newEvent
         });
       }
     } catch (e) {
@@ -93,8 +83,9 @@ const createRouter = () => {
     }
   });
 
+  // -----------------  получение списка всех эвентов ---------------------
   router.get('/events/list', async (req, res) => {
-    const events = await Events.find({}).sort({ date: 1 });
+    const events = await Event.find({}).sort({ date: 1 });
     if (events.length > 0) res.status(200).send(events);
     else res.status(404).send({ message: 'Не найдено ни одного эвента!' })
   });

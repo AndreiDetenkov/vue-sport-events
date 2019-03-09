@@ -1,6 +1,9 @@
 export default {
-  previewEventsList: [],
+  eventsListProd: [],
+  eventItem: '',
+  loading: false,
   errors: {
-    getPreviewEventsListError: null
+    getEventsListProdError: null,
+    getEventItemError: null
   }
 }

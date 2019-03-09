@@ -30,7 +30,7 @@
              a(:href="`${event.sponsorLink}`",
              target="_blank").sponsor-name {{ event.sponsor }}
            v-divider.my-2.hidden-sm-and-up
-   Footer
+   //Footer
 </template>
 
 <script>
@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     ...mapState({
-      list: state => state.events.previewEventsList
+      list: state => state.events.eventsListProd
     })
   },
   methods: {
@@ -91,6 +91,7 @@ export default {
         display: block;
         color: #f6554d;
         font-size: 1rem;
+        text-transform: uppercase;
         font-weight: 700;
         margin-bottom: 4px;
       }

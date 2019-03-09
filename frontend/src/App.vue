@@ -1,7 +1,7 @@
 <template lang="pug">
   v-app
     v-content
-      transition(name="slide-fade")
+      <!--transition(name="slide-fade")-->
         router-view
 </template>
 

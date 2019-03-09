@@ -11,15 +11,20 @@
                 label="Название мероприятия",
                 required)
               v-text-field(
+                label="Дистанция",
+                :rules="[v => !!v || 'Это обязательное поле']"
+                v-model="event.distance",
+                required)
+              v-text-field(
                 v-model="event.location"
                 :rules="[v => !!v || 'Это обязательное поле']"
                 label="Место проведения",
                 required)
               v-text-field(
-                label="Дистанция",
-                :rules="[v => !!v || 'Это обязательное поле']"
-                v-model="event.distance",
-                required)
+                v-model="event.gps",
+                :rules="[v => !!v || 'Это обязательное поле']",
+                required,
+                label="Координаты GPS")
               v-text-field(
                 v-model="event.sponsor"
                 :rules="[v => !!v || 'Это обязательное поле']"
@@ -90,6 +95,7 @@ export default {
     event: {
       title: '',
       location: '',
+      gps: '',
       distance: '',
       date: '',
       sponsor: '',
@@ -151,9 +157,9 @@ export default {
           case 'ADD_NEW_EVENT_SUCCESS':
             this.$store.dispatch('NOTIFICATION',
               { open: true, color: 'success', text: state.admin.newEvent.message })
-            this.$refs.form.reset()
             this.$refs.file.value = ''
             this.$refs.preview.src = ''
+            this.$refs.form.reset()
             break
           case 'ADD_NEW_EVENT_ERROR':
             this.$store.dispatch('NOTIFICATION',
@@ -163,8 +169,9 @@ export default {
       })
     },
     onEditorChange ({ quill, html, text }) {
-      console.log('editor change!', quill, html, text)
-      this.content = html
+      // console.log('editor change!', quill, html, text)
+      console.log('editor change!', html)
+      this.event.content = html
     }
   }
 }

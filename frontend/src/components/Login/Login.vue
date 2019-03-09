@@ -6,7 +6,7 @@
           v-form(ref="form", @submit.prevent="logIn")
             v-card
               v-card-title
-                h3(class="display-1") Админка
+                h3(class="title") sportEvents
               v-card-text
                 v-text-field(
                   ref="login",
@@ -64,9 +64,12 @@ export default {
 
 <style lang="scss" scoped>
   #app {
-    background: #000428;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #004e92, #000428);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #004e92, #000428); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: #757F9A;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #D7DDE8, #757F9A);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #D7DDE8, #757F9A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    /*background: #000428;  !* fallback for old browsers *!*/
+    /*background: -webkit-linear-gradient(to right, #004e92, #000428);  !* Chrome 10-25, Safari 5.1-6 *!*/
+    /*background: linear-gradient(to left, #004e92, #000428); !* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ *!*/
     .v-card {
       padding: 16px 32px;
       &__title {
@@ -74,9 +77,9 @@ export default {
       }
       border-radius: 10px;
       .v-btn--round {
-        max-width: 200px;
+        max-width: 130px;
         width: 100%;
-        height: 45px;
+        height: 40px;
       }
     }
   }

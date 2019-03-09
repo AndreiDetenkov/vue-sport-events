@@ -15,5 +15,15 @@ export default {
         commit('GET_PREVIEW_EVENTS_LIST_ERROR', error.response.data.message)
       }
     })
+  },
+  GET_EVENT_ITEM ({ commit }, id) {
+    axios({
+      method: 'GET',
+      url: `/events/item/${id}`
+    }).then(response => {
+      commit('GET_EVENT_ITEM_SUCCESS', response.data)
+    }).catch(error => {
+      commit('GET_EVENT_ITEM_ERROR', error.response.data.message)
+    })
   }
 }
