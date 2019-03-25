@@ -6,11 +6,20 @@
         v-flex(xs12)
           .image-wrapper
             v-img(
-            :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
-            :alt="event.title",
-            aspect-ratio="1.7")
-              .image-date-box
+              :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
+              :alt="event.title",
+              aspect-ratio="1.7")
+              .image-date-box.hidden-xs-only
                 span {{ moment(this.event.date).format('LL') }}
+              v-layout(
+                slot="placeholder"
+                fill-height
+                align-center
+                justify-center
+                ma-0)
+                v-progress-circular(
+                  indeterminate
+                  color="grey lighten-3")
           h1 {{ event.title }}
       v-layout.mb-4
         v-flex(xs12)
@@ -22,21 +31,30 @@
           p.event-description {{ event.description }}
           p(v-html="event.content").event-html
       v-divider.mb-4
-      v-layout(justify-center row)
+      v-layout(justify-center row).mb-5
         v-flex(xs12 lg10)
+          v-icon.mr-2 place
+          span.event-location <b>Место проведения:</b> {{ event.location }}
           yandex-map(
             :coords="event.gps"
             zoom="12"
-            style="width: 100%; height: 500px;"
-            map-type="hybrid")
+            style="width: 100%; height: 500px;")
             ymap-marker(
               marker-id="event._id"
               marker-type="placemark"
               :coords="event.gps"
-              hint-content="Hint content 1"
-              :balloon="{header: 'header', body: 'body', footer: 'footer'}"
-              :icon="{color: 'red', glyph: ''}"
+              hint-content="Hint content 1",
+              :balloon="{header: `${event.location}`, body: `Организатор мероприятия: ${event.sponsor}`}",
+              :icon="{color: 'red', glyph: ''}",
               cluster-name="1")
+      v-divider.mb-4
+      v-layout
+        v-flex(xs12)
+          p.title.d-inline-block.mx-1 Более подробная информация на сайте организатора эвента -
+          a(class="event-sponsor-link",
+            :href="`${event.sponsorLink}`",
+            :alt="`${event.title}`",
+            target="_blank").title.d-inline-block.mx-1 {{ event.sponsor }}
 </template>
 
 <script>
@@ -62,7 +80,6 @@ export default {
   watch: {
     eventItem (val) {
       this.event = val
-      this.createArrayOfGps(event.lat, event.long)
     }
   },
   computed: {
@@ -72,13 +89,7 @@ export default {
     })
   },
   methods: {
-    createArrayOfGps (lat, long) {
-      let array = []
-      for (let arg in arguments) {
-        array.push(arg)
-      }
-      return array
-    }
+
   }
 }
 </script>
@@ -142,6 +153,19 @@ export default {
     }
     &-html {
       font-size: 1.1rem;
+    }
+    &-location {
+      display: inline-block;
+      font-size: 1.2rem;
+      margin-bottom: 32px;
+    }
+    &-sponsor-link {
+      text-decoration: none;
+      color: #fabb5a;
+      cursor: pointer;
+    }
+    &-sponsor-link:hover {
+      color: #ff960d;
     }
   }
 </style>

@@ -168,6 +168,8 @@ export default {
             this.$refs.file.value = ''
             this.$refs.preview.src = ''
             this.$refs.form.reset()
+            this.event.description = ''
+            this.event.content = ''
             break
           case 'ADD_NEW_EVENT_ERROR':
             this.$store.dispatch('NOTIFICATION',
