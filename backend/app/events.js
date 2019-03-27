@@ -16,6 +16,10 @@ const createRouter = () => {
     else res.status(404).send({ message: 'Не найдено ни одного эвента!' })
   });
 
+  router.post('/', async (req, res) => {
+
+  });
+
   return router;
 };
 

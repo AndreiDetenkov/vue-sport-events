@@ -29,13 +29,13 @@
            v-card-text
              a(:href="`${event.sponsorLink}`",
              target="_blank").sponsor-name {{ event.sponsor }}
-           v-divider.my-2.hidden-sm-and-up
+           v-divider.my-3.hidden-sm-and-up
    //Footer
 </template>
 
 <script>
 import { mapState } from 'vuex'
-import Footer from '../../Footer/Footer'
+import Footer from '../Footer/Footer'
 import Navbar from '../../Navbar/Navbar'
 export default {
   name: 'Events',
@@ -66,6 +66,7 @@ export default {
     text-transform: uppercase;
     margin-bottom: 16px;
     color: #454545;
+    font-size: 2rem;
   }
   .v-card {
     border-top-left-radius: 8px;
@@ -117,6 +118,11 @@ export default {
         text-transform: uppercase;
         text-decoration: none;
       }
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .main-title {
+      font-size: 1.5rem;
     }
   }
 </style>

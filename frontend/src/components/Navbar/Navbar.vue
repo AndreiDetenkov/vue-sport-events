@@ -6,7 +6,7 @@
           span.header__title sport
           span.header__title.header__title--red events
       v-spacer
-      v-btn(icon @click.prevent="login")
+      v-btn(icon @click.prevent="login").login-btn
         v-icon(color="grey") input
 </template>
 
@@ -41,5 +41,8 @@ export default {
         color: #f6554d;
       }
     }
+  }
+  .login-btn:hover {
+    color: transparent;
   }
 </style>

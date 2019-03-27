@@ -10,6 +10,6 @@ module.exports = {
   },
   jwt: {
     secret: 'some secret for sport events',
-    expiresIn: '4h'
+    expiresIn: '1h'
   }
 };

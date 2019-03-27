@@ -30,15 +30,20 @@
         v-flex(xs12)
           p.event-description {{ event.description }}
           p(v-html="event.content").event-html
+          p(class="event-sponsor").d-inline-block.mx-1 Более подробная информация на сайте организатора эвента -&nbsp;
+            a(class="event-sponsor-link text-uppercase",
+              :href="`${event.sponsorLink}`",
+              :alt="`${event.title}`",
+              target="_blank").d-inline-block {{ event.sponsor }}
       v-divider.mb-4
-      v-layout(justify-center row).mb-5
+      v-layout(justify-center row).mb-4
         v-flex(xs12 lg10)
           v-icon.mr-2 place
           span.event-location <b>Место проведения:</b> {{ event.location }}
           yandex-map(
             :coords="event.gps"
             zoom="12"
-            style="width: 100%; height: 500px;")
+            style="width: 100%; height: 400px;")
             ymap-marker(
               marker-id="event._id"
               marker-type="placemark"
@@ -47,19 +52,12 @@
               :balloon="{header: `${event.location}`, body: `Организатор мероприятия: ${event.sponsor}`}",
               :icon="{color: 'red', glyph: ''}",
               cluster-name="1")
-      v-divider.mb-4
-      v-layout
-        v-flex(xs12)
-          p.title.d-inline-block.mx-1 Более подробная информация на сайте организатора эвента -
-          a(class="event-sponsor-link",
-            :href="`${event.sponsorLink}`",
-            :alt="`${event.title}`",
-            target="_blank").title.d-inline-block.mx-1 {{ event.sponsor }}
+    Footer(:id="id")
 </template>
 
 <script>
 import Navbar from '../../Navbar/Navbar'
-import Footer from '../../Footer/Footer'
+import Footer from '../Footer/Footer'
 import { mapState } from 'vuex'
 import Preloader from '../../Common/Preloader/Preloader'
 export default {
@@ -80,6 +78,9 @@ export default {
   watch: {
     eventItem (val) {
       this.event = val
+    },
+    id (val) {
+      this.$store.dispatch('GET_EVENT_ITEM', val)
     }
   },
   computed: {
@@ -136,14 +137,14 @@ export default {
       }
       h1 {
         font-family: 'Montserrat', sans-serif;
-        font-size: 2.8rem;
+        font-size: 2.4rem;
         font-weight: 700;
         text-transform: uppercase;
         color: #504d49;
       }
       h4 {
         font-family: 'Montserrat', sans-serif;
-        font-size: 1.5rem;
+        font-size: 1.4rem;
         text-transform: uppercase;
         color: #fabb5a;
       }
@@ -153,19 +154,50 @@ export default {
     }
     &-html {
       font-size: 1.1rem;
+      margin-bottom: 32px;
     }
     &-location {
       display: inline-block;
       font-size: 1.2rem;
       margin-bottom: 32px;
     }
+    &-sponsor {
+      font-size: 1.5rem;
+    }
     &-sponsor-link {
+      font-size: 1.5rem;
+      font-weight: 700;
       text-decoration: none;
       color: #fabb5a;
       cursor: pointer;
+      margin-bottom: 32px;
     }
     &-sponsor-link:hover {
       color: #ff960d;
+      cursor: pointer;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .event {
+      .container {
+        padding-top: 80px;
+        .image-wrapper {
+          margin-bottom: 32px;
+        }
+        h1 {
+          font-size: 1.6rem;
+        }
+        h4 {
+          font-size: 1.1rem;
+        }
+      }
+      &-sponsor {
+        font-size: 1.2rem;
+        text-align: center;
+      }
+      &-sponsor-link {
+        font-size: 1.3rem;
+      }
     }
   }
 </style>
