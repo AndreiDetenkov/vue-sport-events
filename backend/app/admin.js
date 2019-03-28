@@ -28,11 +28,11 @@ const createRouter = () => {
 
   // -----------------  сохранение нового эвента в БД  ---------------------
   router.post('/add-event-preview', upload.single('imagePreview'), async (req, res) => {
-    Object.keys(req.body).forEach(item => {
-      if (req.body[item] === '') {
-        res.status(400).send({ message: 'Все поля должны быть заполнены!' })
-      }
-    });
+    // Object.keys(req.body).forEach(item => {
+    //   if (req.body[item] === '') {
+    //     res.status(400).send({ message: 'Все поля должны быть заполнены!' })
+    //   }
+    // });
 
     // console.log('req: ', req.body)
 
@@ -41,12 +41,12 @@ const createRouter = () => {
     for (let el in req.body) {
       data[el] = req.body[el]
     }
-    delete data.lat
-    delete data.lng
+    delete data.lat;
+    delete data.lng;
 
     if (req.file) {
       data.imagePreview = req.file.filename
-    } else res.status(400).send({ message: 'Не добавлена фотография!' })
+    } else res.status(400).send({ message: 'Не добавлена фотография!' });
 
     // try {
     //   if (Object.keys(req.files).length === 2) {
@@ -61,7 +61,7 @@ const createRouter = () => {
     //   });
     // }
 
-    data.gps = [req.body.lat, req.body.lng]
+    data.gps = [req.body.lat, req.body.lng];
 
     const event = new Event(data);
 

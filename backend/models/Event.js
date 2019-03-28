@@ -15,6 +15,10 @@ const EventSchema = new Schema({
     type: String,
     required: true
   },
+  videoLink: {
+    type: String,
+    required: false
+  },
   location: {
     type: String,
     required: true

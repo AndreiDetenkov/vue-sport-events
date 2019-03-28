@@ -30,6 +30,9 @@
                 :rules="[v => !!v || 'Это обязательное поле']"
                 label="Ссылка на сайт организатора",
                 required)
+              v-text-field(
+                v-model="event.videoLink"
+                label="Ссылка на видео с youtube")
               v-menu(
                 ref="menu"
                 :close-on-content-click="false"
@@ -110,7 +113,8 @@ export default {
       sponsorLink: '',
       imagePreview: [],
       content: '',
-      description: ''
+      description: '',
+      videoLink: ''
     },
     menu: false,
     hasImage: false
