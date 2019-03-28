@@ -30,11 +30,14 @@
         v-flex(xs12)
           p.event-description {{ event.description }}
           p(v-html="event.content").event-html
-          p(class="event-sponsor").d-inline-block.mx-1 Более подробная информация на сайте организатора эвента -&nbsp;
-            a(class="event-sponsor-link text-uppercase",
-              :href="`${event.sponsorLink}`",
-              :alt="`${event.title}`",
-              target="_blank").d-inline-block {{ event.sponsor }}
+          div(v-if="event.videoLink").video-wrapper
+            youtube(:video-id="videoId", :player-vars="playerVars", resize, fitParent).mb-4
+          div.text-xs-center
+            p(class="event-sponsor").d-inline-block.mx-1 Более подробная информация на сайте организатора эвента -&nbsp;
+              a(class="event-sponsor-link text-uppercase",
+                :href="`${event.sponsorLink}`",
+                :alt="`${event.title}`",
+                target="_blank").d-inline-block {{ event.sponsor }}
       v-divider.mb-4
       v-layout(justify-center row).mb-4
         v-flex(xs12 lg10)
@@ -64,7 +67,11 @@ export default {
   name: 'EventItem',
   components: { Preloader, Footer, Navbar },
   data: () => ({
-    event: null
+    event: null,
+    videoId: 'lG0Ys-2d4MA',
+    playerVars: {
+      autoplay: 0
+    }
   }),
   props: {
     id: {
@@ -78,6 +85,7 @@ export default {
   watch: {
     eventItem (val) {
       this.event = val
+      if (val.videoLink) this.videoId = val.videoLink
     },
     id (val) {
       this.$store.dispatch('GET_EVENT_ITEM', val)
@@ -148,13 +156,18 @@ export default {
         text-transform: uppercase;
         color: #fabb5a;
       }
+      .video-wrapper {
+        margin: 0 auto;
+        width: 100%;
+        max-width: 650px;
+      }
     }
     &-description {
       font-size: 1.2rem;
     }
     &-html {
       font-size: 1.1rem;
-      margin-bottom: 32px;
+      margin-bottom: 50px;
     }
     &-location {
       display: inline-block;
