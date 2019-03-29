@@ -30,8 +30,12 @@
         v-flex(xs12)
           p.event-description {{ event.description }}
           p(v-html="event.content").event-html
-          div(v-if="event.videoLink").video-wrapper
-            youtube(:video-id="videoId", :player-vars="playerVars", resize, fitParent).mb-4
+          div(v-if="event.videoLink").resp-container
+            <!--youtube(:video-id="videoId", :player-vars="playerVars", resize, fitParent).mb-4-->
+            iframe(
+              id="ytplayer",
+              :src="`https://www.youtube.com/embed/${event.videoLink}`",
+              allowfullscreen)
           div.text-xs-center
             p(class="event-sponsor").d-inline-block.mx-1 Более подробная информация на сайте организатора эвента -&nbsp;
               a(class="event-sponsor-link text-uppercase",
@@ -40,13 +44,13 @@
                 target="_blank").d-inline-block {{ event.sponsor }}
       v-divider.mb-4
       v-layout(justify-center row).mb-4
-        v-flex(xs12 lg10)
+        v-flex(xs12)
           v-icon.mr-2 place
           span.event-location <b>Место проведения:</b> {{ event.location }}
           yandex-map(
             :coords="event.gps"
             zoom="12"
-            style="width: 100%; height: 400px;")
+            style="width: 100%; height: 500px;")
             ymap-marker(
               marker-id="event._id"
               marker-type="placemark"
@@ -143,6 +147,20 @@ export default {
           text-transform: uppercase;
         }
       }
+      .resp-container {
+        position: relative;
+        overflow: hidden;
+        padding-top: 56.25%;
+        margin-bottom: 32px;
+        iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+        }
+      }
       h1 {
         font-family: 'Montserrat', sans-serif;
         font-size: 2.4rem;
@@ -155,11 +173,6 @@ export default {
         font-size: 1.4rem;
         text-transform: uppercase;
         color: #fabb5a;
-      }
-      .video-wrapper {
-        margin: 0 auto;
-        width: 100%;
-        max-width: 650px;
       }
     }
     &-description {
