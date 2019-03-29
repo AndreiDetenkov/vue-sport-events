@@ -11,7 +11,6 @@ import firebaseConfig from './config/firebase'
 import interceptors from './axios'
 import VueQuillEditor from 'vue-quill-editor'
 import YmapPlugin from 'vue-yandex-maps'
-import VueYoutube from 'vue-youtube'
 
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
@@ -28,7 +27,6 @@ Vue.prototype.moment = moment
 firebase.initializeApp(firebaseConfig)
 Vue.use(Vuetify, { iconfont: 'md' })
 Vue.use(VueQuillEditor)
-Vue.use(VueYoutube)
 interceptors()
 
 /* eslint-disable no-new */

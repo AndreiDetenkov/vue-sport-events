@@ -31,7 +31,6 @@
           p.event-description {{ event.description }}
           p(v-html="event.content").event-html
           div(v-if="event.videoLink").resp-container
-            <!--youtube(:video-id="videoId", :player-vars="playerVars", resize, fitParent).mb-4-->
             iframe(
               id="ytplayer",
               :src="`https://www.youtube.com/embed/${event.videoLink}`",
