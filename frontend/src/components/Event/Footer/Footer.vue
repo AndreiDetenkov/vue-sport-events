@@ -5,7 +5,7 @@
         h2 Другие доступные мероприятия
       v-footer(color="#504d49" height="auto")
         v-layout(wrap row).mb-2
-          v-flex(v-for="event in this.events", :key="event._id" xs6 md3)
+          v-flex(v-for="event in this.events", :key="event._id" xs6 sm3)
             v-card(flat dark)
               a(:href="`/events/item/${event._id}`", target="_blank").event-link
                 v-img(

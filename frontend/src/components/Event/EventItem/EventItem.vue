@@ -59,6 +59,17 @@
               :icon="{color: 'red', glyph: ''}",
               cluster-name="1")
     Footer(:id="id")
+    v-fab-transition.hidden-xs-only
+      v-btn(
+        dark
+        fab
+        fixed
+        bottom
+        right
+        v-show="hidden"
+        color="red"
+        @click.prevent="$vuetify.goTo(target, options)").hidden-xs-only
+        v-icon keyboard_arrow_up
 </template>
 
 <script>
@@ -74,7 +85,12 @@ export default {
     videoId: 'lG0Ys-2d4MA',
     playerVars: {
       autoplay: 0
-    }
+    },
+    hidden: true,
+    duration: 700,
+    offset: 0,
+    easing: 'easeInQuad',
+    number: 0
   }),
   props: {
     id: {
@@ -98,10 +114,24 @@ export default {
     ...mapState({
       eventItem: state => state.events.eventItem,
       loading: state => state.events.loading
-    })
+    }),
+    target () {
+      const value = this.number
+      if (!isNaN(value)) return Number(value)
+      else return value
+    },
+    options () {
+      return {
+        duration: this.duration,
+        offset: this.offset,
+        easing: this.easing
+      }
+    }
   },
   methods: {
-
+    onScroll (e) {
+      this.hidden = e.target.scrollTop === 100
+    }
   }
 }
 </script>
