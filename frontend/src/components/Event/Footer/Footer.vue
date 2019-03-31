@@ -1,17 +1,25 @@
 <template lang="pug">
-  v-container(grid-list-lg)
-    v-footer(color="white" height="auto")
-      v-layout(wrap row)
-        v-flex(v-for="event in this.events", :key="event._id" xs6 md3)
-          v-card(flat)
-            a(:href="`/events/item/${event._id}`", target="_blank").event-link
-              v-img(
-                :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
-                :alt="event.title",
-                aspect-ratio="1.7")
-            v-card-title
-              span.event-date {{ event.date }}
-              h4.event-title {{ event.title }}
+  footer
+    v-container(grid-list-lg)
+      v-layout(row justify-center).mb-4
+        h2 Другие доступные мероприятия
+      v-footer(color="#504d49" height="auto")
+        v-layout(wrap row).mb-2
+          v-flex(v-for="event in this.events", :key="event._id" xs6 md3)
+            v-card(flat dark)
+              a(:href="`/events/item/${event._id}`", target="_blank").event-link
+                v-img(
+                  :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
+                  :alt="event.title",
+                  aspect-ratio="1.7")
+              v-card-title
+                span.event-date {{ event.date }}
+                h4.event-title {{ event.title }}
+      v-layout(row justify-center)
+        v-flex(xs12)
+          span.footer__title sport
+          span.footer__title.footer__title--red events
+          span.footer__copyright &nbsp;&nbsp;&copy;2019
 </template>
 
 <script>
@@ -53,10 +61,38 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  @font-face {
+    font-family: 'Ocean';
+    src: url('/static/fonts/Ocean.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  footer {
+    background: #504d49;
+    h2 {
+      color: #fff;
+    }
+  }
+  .footer {
+    &__title {
+      font-family: 'Ocean';
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: #fff;
+      &--red {
+        color: #f6554d;
+      }
+    }
+    &__copyright {
+      color: #fff;
+      font-size: 1rem;
+    }
+  }
   .v-card {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
     margin-bottom: 8px;
+    color: #504d49;
     .event-link {
       text-decoration: none;
     }
@@ -67,24 +103,25 @@ export default {
     &__title {
       padding: 16px 0 0;
       text-align: left;
+      background: #504d49;
       .event-date {
         display: block;
-        color: #f6554d;
+        color: #fabb5a;
         font-size: 0.8rem;
         font-weight: 700;
         text-transform: uppercase;
       }
       h4 {
         font-family: 'Montserrat', sans-serif;
-        color: #454545;
+        color: #fff;
         font-size: 1rem;
         font-weight: 700;
         text-transform: uppercase;
         width: 100%;
       }
       h4:hover {
-        color: #595651;
         cursor: pointer;
+        color: #fabb5a;
       }
     }
     &__text {

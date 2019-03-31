@@ -20,6 +20,9 @@
                   td(class="text-xs-left") {{ moment(props.item.date).format('LL') }}
                   td(class="justify-center px-0")
                     v-btn(icon)
+                      v-icon(color="grey darken-2") edit
+                  td(class="justify-center px-0")
+                    v-btn(icon)
                       v-icon(color="grey darken-2") delete
 </template>
 

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .header
+  header
     v-toolbar(flat color="white")
       v-toolbar-title
         a(href="/")
@@ -35,7 +35,7 @@ export default {
     }
     .header__title {
       font-family: 'Ocean';
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: 900;
       &--red {
         color: #f6554d;

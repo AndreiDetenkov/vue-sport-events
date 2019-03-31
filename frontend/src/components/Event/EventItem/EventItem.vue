@@ -42,7 +42,7 @@
                 :alt="`${event.title}`",
                 target="_blank").d-inline-block {{ event.sponsor }}
       v-divider.mb-4
-      v-layout(justify-center row).mb-4
+      v-layout(justify-center row)
         v-flex(xs12)
           v-icon.mr-2 place
           span.event-location <b>Место проведения:</b> {{ event.location }}
