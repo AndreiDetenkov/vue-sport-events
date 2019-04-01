@@ -16,5 +16,14 @@ export default {
   },
   GET_EVENTS_LIST_ERROR (state, error) {
     state.errors.getEventsListError = error
+  },
+  REMOVE_EVENT_SUCCESS (state, payload) {
+    state.errors.removeEventError = null
+  },
+  REMOVE_EVENT_ERROR (state, error) {
+    state.errors.removeEventError = error
+  },
+  REMOVE_EVENT_LOADING (state, payload) {
+    state.loading.removeEventLoading = payload
   }
 }

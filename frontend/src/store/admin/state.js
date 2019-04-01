@@ -2,10 +2,12 @@ export default {
   newEvent: {},
   errors: {
     newEventError: null,
-    getEventsListError: null
+    getEventsListError: null,
+    removeEventError: null
   },
   loading: {
-    addEventBtn: false
+    addEventBtn: false,
+    removeEventLoading: false
   },
   eventsList: []
 }

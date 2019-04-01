@@ -30,6 +30,24 @@ export default {
       commit('GET_EVENTS_LIST_ERROR', error)
     })
   },
+  REMOVE_EVENT_BY_ID ({ commit, dispatch }, data) {
+    commit('REMOVE_EVENT_LOADING', true)
+    axios({
+      method: 'DELETE',
+      url: `/admin/event/delete/${data.eventId}`,
+      data: { dirId: data.dirId }
+    }).then(
+      response => {
+        commit('REMOVE_EVENT_SUCCESS', response.data)
+        commit('REMOVE_EVENT_LOADING', false)
+        dispatch('GET_EVENTS_LIST')
+      },
+      error => {
+        commit('REMOVE_EVENT_ERROR', error.response.data.message)
+        commit('REMOVE_EVENT_LOADING', false)
+      }
+    )
+  },
   LOGOUT ({ commit }) {
     axios({
       method: 'DELETE',
