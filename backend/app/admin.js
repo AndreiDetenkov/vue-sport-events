@@ -5,6 +5,7 @@ const path = require('path');
 const fs = require('fs-extra');
 const config = require('../config');
 const Event = require('../models/Event');
+const auth = require('../middlewares/auth');
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -27,7 +28,7 @@ const createRouter = () => {
   // ]);
 
   // -----------------  сохранение нового эвента в БД  ---------------------
-  router.post('/add-event-preview', upload.single('imagePreview'), async (req, res) => {
+  router.post('/add-event-preview', [auth, upload.single('imagePreview')], async (req, res) => {
     // Object.keys(req.body).forEach(item => {
     //   if (req.body[item] === '') {
     //     res.status(400).send({ message: 'Все поля должны быть заполнены!' })
@@ -88,10 +89,38 @@ const createRouter = () => {
   });
 
   // -----------------  получение списка всех эвентов ---------------------
-  router.get('/events/list', async (req, res) => {
+  router.get('/events/list', auth, async (req, res) => {
     const events = await Event.find({}).sort({ date: 1 });
     if (events.length > 0) res.status(200).send(events);
     else res.status(200).send({ events, message: 'Нет эвентов в БД!' })
+  });
+
+  // -----------------  удаление эвента по id ---------------------
+  router.delete('/event/delete/:id', auth, async (req, res) => {
+    const event = await Event.deleteOne({ _id: req.params.id });
+    const dirName = req.body.dirId;
+    const dirPath = config.uploadPath + `/${dirName}`;
+
+    const deleteFolderRecursive = (path) => {
+      if (fs.existsSync(path)) {
+        fs.readdirSync(path).forEach((file, index) => {
+          let curPath = path + '/' + file;
+          if (fs.lstatSync(curPath).isDirectory()) {
+            deleteFolderRecursive(curPath);
+          } else {
+            fs.unlinkSync(curPath);
+          }
+        });
+        fs.rmdirSync(path);
+      }
+    };
+    deleteFolderRecursive(dirPath);
+
+    try {
+      if (event) res.send({ message: `Эвент ${event.name} успешно удален` });
+    } catch (error) {
+      return res.send({ message: 'Ошибка при удалении', error });
+    }
   });
 
   return router;
