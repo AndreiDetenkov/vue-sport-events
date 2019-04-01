@@ -14,7 +14,7 @@
                   td(width="10") {{ props.index + 1 }}
                   td
                     img(
-                      width="80",
+                      width="50",
                       :src="`http://localhost:8000/uploads/${props.item.dirId}/${props.item.imagePreview}`").mt-1
                   td(class="text-xs-left subheading") {{ props.item.title }}
                   td(class="text-xs-left") {{ moment(props.item.date).format('LL') }}

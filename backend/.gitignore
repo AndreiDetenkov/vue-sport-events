@@ -75,3 +75,5 @@ typings/
 .idea
 .vscode
 fixtures.js
+config.js
+DS_Store
