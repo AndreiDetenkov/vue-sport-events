@@ -25,5 +25,13 @@ export default {
   },
   REMOVE_EVENT_LOADING (state, payload) {
     state.loading.removeEventLoading = payload
+  },
+  GET_EVENT_BY_ID_SUCCESS (state, payload) {
+    state.eventForEdit = payload
+    state.errors.getEventForEditError = null
+  },
+  GET_EVENT_BY_ID_ERROR (state, error) {
+    state.errors.getEventForEditError = error
   }
+
 }

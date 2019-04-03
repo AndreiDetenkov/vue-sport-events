@@ -19,33 +19,39 @@
                   td(class="text-xs-left subheading") {{ props.item.title }}
                   td(class="text-xs-left") {{ moment(props.item.date).format('LL') }}
                   td(class="justify-center px-0")
-                    v-btn(icon)
+                    v-btn(icon,
+                      @click.prevent="openEditDialog(props.item._id)")
                       v-icon(color="grey darken-2") edit
                   td(class="justify-center px-0")
-                    v-btn(icon)
+                    v-btn(icon,
+                      @click.prevent="openDeleteDialog(props.item._id, props.item.title, props.item.dirId)")
                       v-icon(
-                        color="grey darken-2",
-                        @click.prevent="openDialog(props.item._id, props.item.title, props.item.dirId)") delete
+                        color="grey darken-2") delete
     DeleteDialog(
       :show="showDeleteDialog",
       :loading="loadingForRemoveEvent",
       dispatchType="event",
-      @close-dialog="closeDialog",
-      @delete-event-dispatch="removeEvent()")
+      @close-dialog="closeDeleteDialog",
+      @delete-event-dispatch="removeEvent")
         div(slot="title") Вы действительно хотите удалить эвент,<br><b>{{ eventTitle }}</b>?
+    EditEvent(
+    :show="editDialog",
+    @close-edit-dialog="closeEditDialog")
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import DeleteDialog from '../../DeleteDialog/DeleteDialog'
+import EditEvent from '../EditEvent/EditEvent'
 export default {
   name: 'EventsList',
-  components: { DeleteDialog },
+  components: { EditEvent, DeleteDialog },
   data: () => ({
     eventId: '',
     eventTitle: '',
     dirId: '',
-    showDeleteDialog: false
+    showDeleteDialog: false,
+    editDialog: false
   }),
   mounted () {
     this.$store.dispatch('GET_EVENTS_LIST')
@@ -63,16 +69,23 @@ export default {
         dirId: this.dirId
       })
     },
-    closeDialog () {
+    closeDeleteDialog () {
       this.showDeleteDialog = false
       this.eventId = ''
       this.eventTitle = ''
     },
-    openDialog (id, title, dirId) {
+    openDeleteDialog (id, title, dirId) {
       this.eventId = id
       this.eventTitle = title
       this.dirId = dirId
       this.showDeleteDialog = true
+    },
+    openEditDialog (id) {
+      this.$store.dispatch('GET_EVENT_BY_ID', id)
+      this.editDialog = true
+    },
+    closeEditDialog () {
+      this.editDialog = false
     }
   }
 }

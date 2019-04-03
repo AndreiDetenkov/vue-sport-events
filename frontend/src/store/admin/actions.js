@@ -48,6 +48,18 @@ export default {
       }
     )
   },
+  GET_EVENT_BY_ID ({ commit }, id) {
+    axios({
+      method: 'GET',
+      url: `/admin/event/${id}`
+    }).then(response => {
+      console.log(response.data)
+      commit('GET_EVENT_BY_ID_SUCCESS', response.data)
+    }).catch(error => {
+      console.log(error)
+      commit('GET_EVENT_BY_ID_ERROR', error.response.data)
+    })
+  },
   LOGOUT ({ commit }) {
     axios({
       method: 'DELETE',

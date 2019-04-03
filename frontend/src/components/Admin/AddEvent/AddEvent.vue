@@ -101,6 +101,13 @@ import nanoid from 'nanoid'
 export default {
   name: 'AddEvent',
   components: { Notification },
+  props: {
+    edit: {
+      type: Boolean,
+      default: false,
+      required: false
+    }
+  },
   data: () => ({
     event: {
       title: '',
@@ -119,18 +126,22 @@ export default {
     menu: false,
     hasImage: false
   }),
-  mounted () {
+  mounted() {
     this.mutationSubscribe()
   },
   watch: {
     'event.imagePreview': {
       deep: true,
-      handler: function (val) {
+      handler: function(val) {
         if (val) {
           let reader = new FileReader()
-          reader.addEventListener('load', function () {
-            this.$refs.preview.src = reader.result
-          }.bind(this), false)
+          reader.addEventListener(
+            'load',
+            function() {
+              this.$refs.preview.src = reader.result
+            }.bind(this),
+            false
+          )
           reader.readAsDataURL(this.event.imagePreview)
         }
       }
@@ -138,37 +149,33 @@ export default {
   },
   computed: {
     ...mapState(['addEventBtn']),
-    editor () {
+    editor() {
       return this.$refs.myQuillEditor.quill
     }
   },
   methods: {
-    fileChange () {
+    fileChange() {
       this.event.imagePreview = this.$refs.file.files[0]
     },
-    save (date) {
+    save(date) {
       this.$refs.menu.save(date)
     },
-    addEvent () {
+    addEvent() {
       if (this.$refs.form.validate()) {
         const formData = new FormData()
         const id = nanoid()
         formData.append('dirId', id)
-        Object.entries(this.event).forEach(
-          ([key, value]) => formData.append(key, value)
-        )
+        Object.entries(this.event).forEach(([key, value]) => formData.append(key, value))
         this.$store.dispatch('ADD_NEW_EVENT_PREVIEW', formData)
       } else {
-        this.$store.dispatch('NOTIFICATION',
-          { open: true, color: 'error', text: 'Необходимо заполнить все поля!' })
+        this.$store.dispatch('NOTIFICATION', { open: true, color: 'error', text: 'Необходимо заполнить все поля!' })
       }
     },
-    mutationSubscribe () {
+    mutationSubscribe() {
       this.$store.subscribe((mutation, state) => {
         switch (mutation.type) {
           case 'ADD_NEW_EVENT_SUCCESS':
-            this.$store.dispatch('NOTIFICATION',
-              { open: true, color: 'success', text: state.admin.newEvent.message })
+            this.$store.dispatch('NOTIFICATION', { open: true, color: 'success', text: state.admin.newEvent.message })
             this.$refs.file.value = ''
             this.$refs.preview.src = ''
             this.$refs.form.reset()
@@ -176,13 +183,12 @@ export default {
             this.event.content = ''
             break
           case 'ADD_NEW_EVENT_ERROR':
-            this.$store.dispatch('NOTIFICATION',
-              { open: true, color: 'error', text: state.admin.errors.newEventError })
+            this.$store.dispatch('NOTIFICATION', { open: true, color: 'error', text: state.admin.errors.newEventError })
             break
         }
       })
     },
-    onEditorChange ({ quill, html, text }) {
+    onEditorChange({ quill, html, text }) {
       // console.log('editor change!', quill, html, text)
       console.log('editor change!', html)
       this.event.content = html
@@ -192,35 +198,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .container {
-    .v-card {
-       padding: 16px;
-       &__title {
-         .image-preview {
-           width: 100%;
-           img {
-             max-width: 100%;
-           }
-         }
-       }
-     }
-    input[type="file"] {
-      display: none;
-    }
-    .label {
-      border: 1px solid #c3c3c3;
-      display: inline-block;
-      padding: 6px 12px;
-      cursor: pointer;
-      span {
-        display: inline-block;
-        transform: translateY(-3px);
+.container {
+  .v-card {
+    padding: 16px;
+    &__title {
+      .image-preview {
+        width: 100%;
+        img {
+          max-width: 100%;
+        }
       }
     }
-    .v-btn {
-      max-width: 200px;
-      width: 100%;
-      height: 45px;
+  }
+  input[type='file'] {
+    display: none;
+  }
+  .label {
+    border: 1px solid #c3c3c3;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    span {
+      display: inline-block;
+      transform: translateY(-3px);
     }
   }
+  .v-btn {
+    max-width: 200px;
+    width: 100%;
+    height: 45px;
+  }
+}
 </style>

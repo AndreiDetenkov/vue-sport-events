@@ -1,13 +1,15 @@
 export default {
   newEvent: {},
   errors: {
-    newEventError: null,
-    getEventsListError: null,
-    removeEventError: null
+    newEventError: '',
+    getEventsListError: '',
+    removeEventError: '',
+    getEventForEditError: ''
   },
   loading: {
     addEventBtn: false,
     removeEventLoading: false
   },
-  eventsList: []
+  eventsList: [],
+  eventForEdit: []
 }
