@@ -7,7 +7,7 @@
          h1.main-title Календарь спортивных мероприятий на <span class="year">2019 год</span>
      v-layout(row wrap)
        v-flex(v-for="event in list", :key="event._id" xs12 sm6 md4 lg3)
-         v-card(flat)
+         v-card(flat).mb-3
            div.event-img
              v-img(
                :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",

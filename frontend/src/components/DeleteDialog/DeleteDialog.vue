@@ -9,12 +9,14 @@
         slot(name="title")
       v-card-actions
         v-spacer
-        v-btn(outline color="error" @click.prevent="cancel").mx-2 Отмена
         v-btn(
-        color="primary",
-        :loading="loading",
-        :disabled="loading",
-        @click.prevent="remove").mx-2 Удалить
+          color="primary"
+          @click.prevent="cancel").mx-2 Отмена
+        v-btn(
+          color="error",
+          :loading="loading",
+          :disabled="loading",
+          @click.prevent="remove").mx-2 Удалить
         v-spacer
 </template>
 

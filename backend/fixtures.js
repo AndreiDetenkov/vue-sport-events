@@ -21,12 +21,8 @@ db.once('open', async () => {
   // });
 
   await User.create({
-    username: 'user',
-    password: '123',
-    role: 'user'
-  }, {
     username: 'admin',
-    password: '123',
+    password: '123456',
     role: 'admin'
   });
 
