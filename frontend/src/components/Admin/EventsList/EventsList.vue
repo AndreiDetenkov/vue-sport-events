@@ -1,39 +1,30 @@
 <template lang="pug">
-  v-container
-    v-layout(row justify-center)
-      v-flex(xs12)
-        v-card(class="elevation-4")
-          v-card-text
-            v-form(ref="form")
-              v-data-table(
-                no-data-text="Нет данных для отображения",
-                :items="events",
-                hide-actions,
-                hide-headers)
-                template(slot="items" slot-scope="props")
-                  td(width="10") {{ props.index + 1 }}
-                  td
-                    img(
-                      width="50",
-                      :src="`http://localhost:8000/uploads/${props.item.dirId}/${props.item.imagePreview}`").mt-1
-                  td(class="text-xs-left subheading") {{ props.item.title }}
-                  td(class="text-xs-left") {{ moment(props.item.date).format('LL') }}
-                  td(class="justify-center px-0")
-                    v-btn(icon,
-                      @click.prevent="openEditDialog(props.item._id)")
-                      v-icon(color="grey darken-2") edit
-                  td(class="justify-center px-0")
-                    v-btn(icon,
-                      @click.prevent="openDeleteDialog(props.item._id, props.item.title, props.item.dirId)")
-                      v-icon(
-                        color="grey darken-2") delete
+  v-container(fluid grid-list-lg)
+    v-layout(row wrap)
+      v-flex(v-for="event in events", :key="event._id" xs12 sm6 md4 lg3)
+        v-card()
+          v-img(
+          :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
+          :alt="event.title",
+          aspect-ratio="1.7")
+          v-card-title.text-xs-left {{ event.title }}
+          v-card-actions
+            v-btn(outline color="primary lighten-2",
+              @click.prevent="openEditDialog(event._id)")
+              v-icon edit
+              span Edit
+            v-btn(outline color="error lighten-1",
+              @click.prevent="openDeleteDialog(event._id, event.title, event.dirId)")
+              v-icon delete
+              span Delete
+              // {{ moment(props.item.date).format('LL') }}
     DeleteDialog(
       :show="showDeleteDialog",
       :loading="loadingForRemoveEvent",
       dispatchType="event",
       @close-dialog="closeDeleteDialog",
       @delete-event-dispatch="removeEvent")
-        div(slot="title") Вы действительно хотите удалить эвент,<br><b>{{ eventTitle }}</b>?
+      div(slot="title") Вы действительно хотите удалить эвент,<br><b>{{ eventTitle }}</b>?
     EditEvent(
     :show="editDialog",
     @close-edit-dialog="closeEditDialog")

@@ -24,6 +24,11 @@ export default {
   data: () => ({
     edit: false
   }),
+  watch: {
+    show (val) {
+      this.edit = !!val
+    }
+  },
   methods: {
     close () {
       this.$emit('close-edit-dialog')

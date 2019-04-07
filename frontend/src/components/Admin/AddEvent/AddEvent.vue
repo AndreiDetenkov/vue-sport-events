@@ -88,7 +88,8 @@
             :content="event.content"
             ref="myQuillEditor"
             @change="onEditorChange($event)")
-    v-btn(color="primary" @click="addEvent", :loading="addEventBtn").my-4 Добавить
+    v-btn(color="primary", @click="addEvent", :loading="addEventBtn", v-if="!edit").my-4 Добавить
+    v-btn(color="primary", @click="editEvent", v-if="edit").my-4 Сохранить
     Notification
 </template>
 
@@ -126,18 +127,18 @@ export default {
     menu: false,
     hasImage: false
   }),
-  mounted() {
+  mounted () {
     this.mutationSubscribe()
   },
   watch: {
     'event.imagePreview': {
       deep: true,
-      handler: function(val) {
+      handler: function (val) {
         if (val) {
           let reader = new FileReader()
           reader.addEventListener(
             'load',
-            function() {
+            function () {
               this.$refs.preview.src = reader.result
             }.bind(this),
             false
@@ -145,22 +146,40 @@ export default {
           reader.readAsDataURL(this.event.imagePreview)
         }
       }
+    },
+    eventForEdit (val) {
+      if (this.edit) {
+        this.event.title = val.title
+        this.event.distance = val.distance
+        this.event.location = val.location
+        this.event.sponsor = val.sponsor
+        this.event.sponsorLink = val.sponsorLink
+        this.event.date = val.date
+        this.event.videoLink = val.videoLink
+        this.event.lat = val.gps[0]
+        this.event.lng = val.gps[1]
+        this.event.description = val.description
+        this.event.content = val.content
+      }
     }
   },
   computed: {
-    ...mapState(['addEventBtn']),
-    editor() {
+    ...mapState({
+      addEventBtn: state => state.admin.loading.addEventBtn,
+      eventForEdit: state => state.admin.eventForEdit
+    }),
+    editor () {
       return this.$refs.myQuillEditor.quill
     }
   },
   methods: {
-    fileChange() {
+    fileChange () {
       this.event.imagePreview = this.$refs.file.files[0]
     },
-    save(date) {
+    save (date) {
       this.$refs.menu.save(date)
     },
-    addEvent() {
+    addEvent () {
       if (this.$refs.form.validate()) {
         const formData = new FormData()
         const id = nanoid()
@@ -171,7 +190,7 @@ export default {
         this.$store.dispatch('NOTIFICATION', { open: true, color: 'error', text: 'Необходимо заполнить все поля!' })
       }
     },
-    mutationSubscribe() {
+    mutationSubscribe () {
       this.$store.subscribe((mutation, state) => {
         switch (mutation.type) {
           case 'ADD_NEW_EVENT_SUCCESS':
@@ -188,10 +207,13 @@ export default {
         }
       })
     },
-    onEditorChange({ quill, html, text }) {
+    onEditorChange ({ quill, html, text }) {
       // console.log('editor change!', quill, html, text)
-      console.log('editor change!', html)
+      // console.log('editor change!', html)
       this.event.content = html
+    },
+    editEvent () {
+
     }
   }
 }

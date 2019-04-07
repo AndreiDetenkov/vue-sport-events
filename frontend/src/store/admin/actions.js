@@ -53,7 +53,6 @@ export default {
       method: 'GET',
       url: `/admin/event/${id}`
     }).then(response => {
-      console.log(response.data)
       commit('GET_EVENT_BY_ID_SUCCESS', response.data)
     }).catch(error => {
       console.log(error)
