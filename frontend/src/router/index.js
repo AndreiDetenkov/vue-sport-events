@@ -14,7 +14,7 @@ export default new Router({
   mode: 'history',
   routes: [
     {
-      path: '/events',
+      path: '/events/list',
       name: 'events',
       component: Events
     },
@@ -51,7 +51,7 @@ export default new Router({
     },
     {
       path: '*',
-      redirect: { path: '/events' }
+      redirect: { path: '/events/list' }
     }
   ]
 })

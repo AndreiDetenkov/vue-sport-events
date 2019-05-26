@@ -118,6 +118,16 @@ const createRouter = () => {
     }
   })
 
+  // -----------------  редактирование эвента по id ---------------------
+  router.put('/event/edit/:id', auth, async (req, res) => {
+    console.log(req.body)
+    console.log(req.params.id)
+    // try {
+    //   const event = await Event.findOneAndUpdate({ id: req.params.id }, req.body)
+    //   console.log(event)
+    // } catch (e) {}
+  })
+
   // -----------------  получени эвента по id для редактирования ---------------------
   router.get('/event/:id', async (req, res) => {
     const id = req.params.id

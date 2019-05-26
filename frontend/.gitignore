@@ -19,3 +19,4 @@ selenium-debug.log
 *.sln
 
 .firebase
+config.js

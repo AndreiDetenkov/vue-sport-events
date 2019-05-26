@@ -6,7 +6,7 @@
         v-flex(xs12)
           .image-wrapper
             v-img(
-              :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
+              :src="createUrl(event.dirId, event.imagePreview)",
               :alt="event.title",
               aspect-ratio="1.7")
               .image-date-box.hidden-xs-only
@@ -54,11 +54,10 @@
               marker-id="event._id"
               marker-type="placemark"
               :coords="event.gps"
-              hint-content="Hint content 1",
               :balloon="{header: `${event.location}`, body: `Организатор мероприятия: ${event.sponsor}`}",
               :icon="{color: 'red', glyph: ''}",
               cluster-name="1")
-    Footer(:id="id")
+    Footer(v-if="isShowFooter", :id="id")
     v-fab-transition.hidden-xs-only
       v-btn(
         dark
@@ -82,6 +81,7 @@ export default {
   components: { Preloader, Footer, Navbar },
   data: () => ({
     event: null,
+    isShowFooter: false,
     videoId: 'lG0Ys-2d4MA',
     playerVars: {
       autoplay: 0
@@ -101,14 +101,21 @@ export default {
   mounted () {
     this.$store.dispatch('GET_EVENT_ITEM', this.id)
   },
+  destroyed () {
+    this.event = null
+    this.isShowFooter = false
+  },
   watch: {
     eventItem (val) {
-      this.event = val
-      if (val.videoLink) this.videoId = val.videoLink
-    },
-    id (val) {
-      this.$store.dispatch('GET_EVENT_ITEM', val)
+      if (val) {
+        this.event = val
+        this.isShowFooter = true
+        if (val.videoLink) this.videoId = val.videoLink
+      }
     }
+    // id (val) {
+    //   this.$store.dispatch('GET_EVENT_ITEM', val)
+    // }
   },
   computed: {
     ...mapState({
@@ -131,128 +138,133 @@ export default {
   methods: {
     onScroll (e) {
       this.hidden = e.target.scrollTop === 100
+    },
+    createUrl (dirId, image) {
+      const env = process.env.NODE_ENV
+      if (env === 'development') return `http://localhost:8000/uploads/${dirId}/${image}`
+      else return `http://sport-kg.com:8000/uploads/${dirId}/${image}`
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-  .event {
-    .navbar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-    }
-    .container {
-      padding-top: 100px;
-      .image-wrapper {
-        margin-bottom: 48px;
-        .v-image {
-          border-radius: 8px;
-        }
-        .image-date-box {
-          position: absolute;
-          content: '';
-          top: 32px;
-          left: 0;
-          width: 300px;
-          height: 70px;
-          background: #fff;
-          border-top-right-radius: 8px;
-          border-bottom-right-radius: 8px;
-        }
-        span {
-          position: absolute;
-          content: '';
-          top: 50%;
-          margin-top: -19px;
-          left: 50%;
-          margin-left: -130px;
-          color: #f6554d;
-          font-size: 1.8rem;
-          font-weight: 700;
-          text-transform: uppercase;
-        }
+.event {
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+  }
+  .container {
+    padding-top: 100px;
+    .image-wrapper {
+      margin-bottom: 48px;
+      .v-image {
+        border-radius: 8px;
       }
-      .resp-container {
-        position: relative;
-        overflow: hidden;
-        padding-top: 56.25%;
-        margin-bottom: 32px;
-        iframe {
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          border: 0;
-        }
+      .image-date-box {
+        position: absolute;
+        content: '';
+        top: 32px;
+        left: 0;
+        width: 300px;
+        height: 70px;
+        background: #fff;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
       }
-      h1 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 2.4rem;
+      span {
+        position: absolute;
+        content: '';
+        top: 50%;
+        margin-top: -19px;
+        left: 50%;
+        margin-left: -130px;
+        color: #f6554d;
+        font-size: 1.8rem;
         font-weight: 700;
         text-transform: uppercase;
-        color: #504d49;
+      }
+    }
+    .resp-container {
+      position: relative;
+      overflow: hidden;
+      padding-top: 56.25%;
+      margin-bottom: 32px;
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+    }
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #504d49;
+    }
+    h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      color: #fabb5a;
+    }
+  }
+  &-description {
+    font-size: 1.2rem;
+  }
+  &-html {
+    font-size: 1.1rem;
+    margin-bottom: 50px;
+  }
+  &-location {
+    display: inline-block;
+    font-size: 1.2rem;
+    margin-bottom: 32px;
+  }
+  &-sponsor {
+    font-size: 1.5rem;
+  }
+  &-sponsor-link {
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #fabb5a;
+    cursor: pointer;
+    margin-bottom: 32px;
+  }
+  &-sponsor-link:hover {
+    color: #ff960d;
+    cursor: pointer;
+  }
+}
+@media screen and (max-width: 600px) {
+  .event {
+    .container {
+      padding-top: 80px;
+      .image-wrapper {
+        margin-bottom: 32px;
+      }
+      h1 {
+        font-size: 1.6rem;
       }
       h4 {
-        font-family: 'Montserrat', sans-serif;
-        font-size: 1.4rem;
-        text-transform: uppercase;
-        color: #fabb5a;
+        font-size: 1.1rem;
       }
-    }
-    &-description {
-      font-size: 1.2rem;
-    }
-    &-html {
-      font-size: 1.1rem;
-      margin-bottom: 50px;
-    }
-    &-location {
-      display: inline-block;
-      font-size: 1.2rem;
-      margin-bottom: 32px;
     }
     &-sponsor {
-      font-size: 1.5rem;
+      font-size: 1.2rem;
+      text-align: center;
     }
     &-sponsor-link {
-      font-size: 1.5rem;
-      font-weight: 700;
-      text-decoration: none;
-      color: #fabb5a;
-      cursor: pointer;
-      margin-bottom: 32px;
-    }
-    &-sponsor-link:hover {
-      color: #ff960d;
-      cursor: pointer;
+      font-size: 1.3rem;
     }
   }
-  @media screen and (max-width: 600px) {
-    .event {
-      .container {
-        padding-top: 80px;
-        .image-wrapper {
-          margin-bottom: 32px;
-        }
-        h1 {
-          font-size: 1.6rem;
-        }
-        h4 {
-          font-size: 1.1rem;
-        }
-      }
-      &-sponsor {
-        font-size: 1.2rem;
-        text-align: center;
-      }
-      &-sponsor-link {
-        font-size: 1.3rem;
-      }
-    }
-  }
+}
 </style>

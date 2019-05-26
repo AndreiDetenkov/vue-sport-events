@@ -7,9 +7,9 @@
         v-layout(wrap row).mb-2
           v-flex(v-for="event in this.events", :key="event._id" xs6 sm3)
             v-card(flat dark)
-              a(:href="`/events/item/${event._id}`", target="_blank").event-link
+              a(:href="`http://sport-kg.com/events/item/${event._id}`", target="_blank").event-link
                 v-img(
-                  :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
+                  :src="createUrl(event.dirId, event.imagePreview)",
                   :alt="event.title",
                   aspect-ratio="1.7")
               v-card-title
@@ -55,6 +55,11 @@ export default {
   methods: {
     viewEventItem (id) {
       this.$router.push({ path: `/events/item/${id}` })
+    },
+    createUrl (dirId, image) {
+      const env = process.env.NODE_ENV
+      if (env === 'production') return `http://sport-kg.com:8000/uploads/${dirId}/${image}`
+      else return `http://localhost:8000/uploads/${dirId}/${image}`
     }
   }
 }

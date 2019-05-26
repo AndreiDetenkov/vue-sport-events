@@ -1,22 +1,22 @@
 <template lang="pug">
   v-container(fluid grid-list-lg)
     v-layout(row wrap)
-      v-flex(v-for="event in events", :key="event._id" xs12 sm6 md4 lg3)
+      v-flex(v-for="event in events", :key="event._id" xs12 sm6 md4 lg3 xl2)
         v-card()
           v-img(
-          :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
+          :src="createUrl(event.dirId, event.imagePreview)",
           :alt="event.title",
           aspect-ratio="1.7")
-          v-card-title.text-xs-left {{ event.title }}
+          v-card-title
+            div.text-truncate {{ event.title }}
           v-card-actions
-            v-btn(outline color="primary lighten-2",
+            v-spacer
+            v-btn(icon,
               @click.prevent="openEditDialog(event._id)")
-              v-icon edit
-              span Edit
-            v-btn(outline color="error lighten-1",
+              v-icon(color="primary lighten-2") edit
+            v-btn(icon,
               @click.prevent="openDeleteDialog(event._id, event.title, event.dirId)")
-              v-icon delete
-              span Delete
+              v-icon(color="error lighten-1") delete
               // {{ moment(props.item.date).format('LL') }}
     DeleteDialog(
       :show="showDeleteDialog",
@@ -27,6 +27,7 @@
       div(slot="title") Вы действительно хотите удалить эвент,<br><b>{{ eventTitle }}</b>?
     EditEvent(
     :show="editDialog",
+    :id="eventId",
     @close-edit-dialog="closeEditDialog")
 </template>
 
@@ -72,11 +73,18 @@ export default {
       this.showDeleteDialog = true
     },
     openEditDialog (id) {
+      this.eventId = id
       this.$store.dispatch('GET_EVENT_BY_ID', id)
       this.editDialog = true
     },
     closeEditDialog () {
       this.editDialog = false
+      this.eventId = ''
+    },
+    createUrl (dirId, image) {
+      const env = process.env.NODE_ENV
+      if (env === 'production') return `http://sport-kg.com:8000/uploads/${dirId}/${image}`
+      else return `http://localhost:8000/uploads/${dirId}/${image}`
     }
   }
 }

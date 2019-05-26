@@ -1,6 +1,7 @@
 <template lang="pug">
   header
     v-toolbar(flat color="white")
+      v-spacer.hidden-sm-and-up
       v-toolbar-title
         a(href="/")
           span.header__title sport

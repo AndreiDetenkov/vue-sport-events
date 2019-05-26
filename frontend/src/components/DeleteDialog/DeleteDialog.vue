@@ -3,14 +3,15 @@
     v-model="show",
     transition="slide-y-reverse-transition",
     persistent,
-    max-width="450")
-    v-card.delete-form
+    max-width="400px")
+    v-card.pa-3
       v-card-text.text-xs-center.mb-3
         slot(name="title")
       v-card-actions
         v-spacer
         v-btn(
-          color="primary"
+          outline,
+          color="grey",
           @click.prevent="cancel").mx-2 Отмена
         v-btn(
           color="error",
@@ -71,10 +72,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-  .delete-form {
-    padding: 16px;
-    font-size: 1.2rem;
-  }
-</style>

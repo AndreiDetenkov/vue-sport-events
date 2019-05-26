@@ -9,20 +9,20 @@ mongoose.connect(config.db.url + '/' + config.db.name, {
 
 const db = mongoose.connection;
 
-// const collections = ['users'];
+const collections = ['users'];
 
 db.once('open', async () => {
-  // collections.forEach(async collectionName => {
-  //   try {
-  //     await db.dropCollection(collectionName);
-  //   } catch (e) {
-  //     console.log(`Collection ${collectionName} did not exist in DB`);
-  //   }
-  // });
+  collections.forEach(async collectionName => {
+    try {
+      await db.dropCollection(collectionName);
+    } catch (e) {
+      console.log(`Collection ${collectionName} did not exist in DB`);
+    }
+  });
 
   await User.create({
     username: 'admin',
-    password: '123456',
+    password: 'qaz123WSX!@#',
     role: 'admin'
   });
 

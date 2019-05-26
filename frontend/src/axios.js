@@ -1,8 +1,9 @@
 import axios from 'axios'
 import store from './store/index'
+import config from './config/config'
 import NProgress from 'nprogress'
 
-axios.defaults.baseURL = 'http://localhost:8000'
+axios.defaults.baseURL = config.apiUrl
 
 export default function interceptors () {
   axios.interceptors.request.use(function (config) {

@@ -59,7 +59,24 @@ export default {
       commit('GET_EVENT_BY_ID_ERROR', error.response.data)
     })
   },
-  LOGOUT ({ commit }) {
+  EDIT_EVENT ({ commit }, data) {
+    // for (let pair of data.formData.entries()) {
+    //   console.log(pair[0] + ', ' + pair[1])
+    // }
+    axios({
+      method: 'PUT',
+      url: `/admin/event/edit/${data.id}`,
+      data: data.formData,
+      headers: { 'Content-Type': 'multipart/form-data' }
+    }).then(response => {
+      console.log(response.data)
+      commit('', response.data)
+    }).catch(error => {
+      console.log(error)
+      commit('', error)
+    })
+  },
+  LOGOUT () {
     axios({
       method: 'DELETE',
       url: '/users/sessions'

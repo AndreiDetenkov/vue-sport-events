@@ -88,8 +88,8 @@
             :content="event.content"
             ref="myQuillEditor"
             @change="onEditorChange($event)")
-    v-btn(color="primary", @click="addEvent", :loading="addEventBtn", v-if="!edit").my-4 Добавить
-    v-btn(color="primary", @click="editEvent", v-if="edit").my-4 Сохранить
+    v-btn(color="primary", @click.prevent="editEvent", v-if="edit").my-4 Сохранить
+    v-btn(color="primary", @click.prevent="addEvent", :loading="addEventBtn", v-else).my-4 Добавить
     Notification
 </template>
 
@@ -97,8 +97,6 @@
 import { mapState } from 'vuex'
 import Notification from '../../Common/Notiifcation/Notification'
 import nanoid from 'nanoid'
-// import moment from 'moment'
-// moment().format('LL')
 export default {
   name: 'AddEvent',
   components: { Notification },
@@ -107,6 +105,10 @@ export default {
       type: Boolean,
       default: false,
       required: false
+    },
+    id: {
+      type: String,
+      default: ''
     }
   },
   data: () => ({
@@ -208,12 +210,13 @@ export default {
       })
     },
     onEditorChange ({ quill, html, text }) {
-      // console.log('editor change!', quill, html, text)
-      // console.log('editor change!', html)
       this.event.content = html
     },
     editEvent () {
-
+      const formData = new FormData()
+      Object.entries(this.event).forEach(([key, value]) => formData.append(key, value))
+      formData.delete('imagePreview')
+      this.$store.dispatch('EDIT_EVENT', { formData, id: this.id })
     }
   }
 }
@@ -249,6 +252,9 @@ export default {
     max-width: 200px;
     width: 100%;
     height: 45px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
   }
 }
 </style>

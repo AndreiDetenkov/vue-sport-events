@@ -7,29 +7,30 @@
          h1.main-title Календарь спортивных мероприятий на <span class="year">2019 год</span>
      v-layout(row wrap)
        v-flex(v-for="event in list", :key="event._id" xs12 sm6 md4 lg3)
-         v-card(flat).mb-3
-           div.event-img
-             v-img(
-               :src="`http://localhost:8000/uploads/${event.dirId}/${event.imagePreview}`",
-               @click.prevent="viewEventItem(event._id)",
-               :alt="event.title",
-               aspect-ratio="1.7")
-               v-layout(
-                 slot="placeholder"
-                 fill-height
-                 align-center
-                 justify-center
-                 ma-0)
-                 v-progress-circular(
-                  indeterminate
-                  color="grey lighten-3")
-           v-card-title
-             span.event-date {{ event.date }}
-             h4(@click.prevent="viewEventItem(event._id)").event-title {{ event.title }}
-           v-card-text
-             a(:href="`${event.sponsorLink}`",
-             target="_blank").sponsor-name {{ event.sponsor }}
-           v-divider.my-3.hidden-sm-and-up
+         v-hover
+           v-card(flat, slot-scope="{ hover }").mb-3
+             div.event-img
+               v-img(
+                 :src="createUrl(event.dirId, event.imagePreview)",
+                 @click.prevent="viewEventItem(event._id)",
+                 :alt="event.title",
+                 aspect-ratio="1.7")
+                 v-layout(
+                   slot="placeholder"
+                   fill-height
+                   align-center
+                   justify-center
+                   ma-0)
+                   v-progress-circular(
+                    indeterminate
+                    color="grey lighten-3")
+             v-card-title
+               span.event-date {{ event.date }}
+               h4(@click.prevent="viewEventItem(event._id)").event-title {{ event.title }}
+             v-card-text
+               a(:href="`${event.sponsorLink}`",
+               target="_blank").sponsor-name {{ event.sponsor }}
+             v-divider.my-3.hidden-sm-and-up
    //Footer
 </template>
 
@@ -53,6 +54,11 @@ export default {
   methods: {
     viewEventItem (id) {
       this.$router.push({ path: `/events/item/${id}` })
+    },
+    createUrl (dirId, image) {
+      const env = process.env.NODE_ENV
+      if (env === 'development') return `http://localhost:8000/uploads/${dirId}/${image}`
+      else return `http://sport-kg.com:8000/uploads/${dirId}/${image}`
     }
   }
 }
